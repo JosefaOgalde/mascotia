@@ -33,6 +33,8 @@ jobs:
             **/__pycache__/**
             **/*.pyc
             **/.env
+            cgi-bin/**
+            .well-known/**
             core/**
             mascotia_project/**
             templates/**
