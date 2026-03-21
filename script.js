@@ -3,8 +3,7 @@ const NAVBAR_TEMPLATE = `
     <div class="container topbar-inner">
       <a href="#" class="logo">mascotia.app</a>
       <nav class="auth-buttons">
-        <button class="btn btn-outline">Iniciar Sesión</button>
-        <button class="btn btn-fill">Registrarme</button>
+        <button class="btn btn-fill" data-open-newsletter>Suscribete a nuestro newsletter</button>
       </nav>
     </div>
   </header>
@@ -112,6 +111,102 @@ function setupHeroCarousel() {
 }
 
 setupHeroCarousel();
+
+function getCookie(name) {
+  const allCookies = `; ${document.cookie}`;
+  const cookieParts = allCookies.split(`; ${name}=`);
+  if (cookieParts.length !== 2) {
+    return "";
+  }
+  return cookieParts.pop().split(";").shift();
+}
+
+function setupNewsletterModal() {
+  const modal = document.querySelector("[data-newsletter-modal]");
+  const openButtons = [...document.querySelectorAll("[data-open-newsletter]")];
+  const closeButtons = [...document.querySelectorAll("[data-close-newsletter]")];
+  const form = document.querySelector("[data-newsletter-form]");
+  const message = document.querySelector("[data-newsletter-message]");
+
+  if (!modal || !openButtons.length || !form || !message) {
+    return;
+  }
+
+  const emailInput = form.querySelector("input[name='email']");
+
+  function openModal() {
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    if (emailInput) {
+      emailInput.focus();
+    }
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+
+  function setMessage(text, success) {
+    message.textContent = text;
+    message.classList.toggle("is-success", success);
+    message.classList.toggle("is-error", !success);
+  }
+
+  openButtons.forEach((button) => {
+    button.addEventListener("click", openModal);
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeModal);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      closeModal();
+    }
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const email = String(formData.get("email") || "").trim();
+
+    if (!email) {
+      setMessage("Ingresa un correo valido.", false);
+      return;
+    }
+
+    setMessage("Procesando suscripcion...", true);
+
+    try {
+      const csrfToken = getCookie("csrftoken");
+      const response = await fetch("/api/newsletter/subscribe/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        setMessage(data.message || "No pudimos procesar la suscripcion.", false);
+        return;
+      }
+
+      setMessage(data.message || "Suscripcion realizada con exito.", true);
+      form.reset();
+    } catch (_error) {
+      setMessage("Error de conexion. Intenta nuevamente.", false);
+    }
+  });
+}
+
+setupNewsletterModal();
 
 const yearNode = document.getElementById("year");
 
