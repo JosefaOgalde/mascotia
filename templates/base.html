@@ -1,10 +1,10 @@
+{% load static %}
 <!doctype html>
 <html lang="es">
   <head>
-    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Mascotia.app{% endblock %}</title>
+    <title>Mascotia.app</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,7 +22,77 @@
   </head>
   <body>
     <div data-global-navbar></div>
-    {% block content %}{% endblock %}
+    <main>
+      <section class="hero-wrap container">
+        <div class="hero-banner">
+          <div class="hero-slides" data-hero-slides></div>
+          <div class="hero-overlay"></div>
+        </div>
+
+        <article class="hero-card">
+          <h1>Mascotia.app</h1>
+          <p>Bitácora Digital de Salud Animal para Tutores.</p>
+          <div class="hero-cta">
+            <a href="#" class="btn btn-fill"><i class="fa-regular fa-pen-to-square"></i> Comenzar Ahora</a>
+            <a href="#" class="btn btn-outline"><i class="fa-solid fa-key"></i> Ya tengo cuenta</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="features">
+        <div class="container">
+          <header class="section-heading">
+            <h2>
+              Un sistema completo para
+              <span>gestionar la información clínica</span>
+              de tus mascotas
+            </h2>
+            <p>
+              Accede al historial clínico de forma rápida, clara y siempre disponible
+              para asegurar un <strong>cuidado responsable y constante.</strong>
+            </p>
+          </header>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="icon-circle"><i class="fa-regular fa-folder-open"></i></div>
+              <h3>Historial Digital</h3>
+              <p>Guarda y accede al historial médico completo de tus mascotas en cualquier momento.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon-circle"><i class="fa-regular fa-bell"></i></div>
+              <h3>Recordatorios</h3>
+              <p>Recibe notificaciones de vacunas, desparasitaciones y citas veterinarias.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon-circle"><i class="fa-solid fa-lock"></i></div>
+              <h3>Seguro y Confiable</h3>
+              <p>Tus datos están protegidos con los más altos estándares de seguridad.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-access">
+        <div class="container quick-grid">
+          <article class="quick-card quick-vet">
+            <div class="quick-content">
+              <h3>Clínicas Veterinarias</h3>
+              <p>Encuentra la más cercana</p>
+              <a href="#" class="btn btn-light"><i class="fa-solid fa-location-dot"></i> Buscar ahora</a>
+            </div>
+          </article>
+
+          <article class="quick-card quick-store">
+            <div class="quick-content">
+              <h3>Alimentos y Accesorios</h3>
+              <p>Encuentra la tienda más cercana</p>
+              <a href="#" class="btn btn-light"><i class="fa-solid fa-location-dot"></i> Buscar ahora</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
     <div data-global-footer></div>
     <script src="{% static 'script.js' %}"></script>
   </body>
