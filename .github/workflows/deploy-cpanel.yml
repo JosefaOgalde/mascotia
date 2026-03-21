@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to cPanel public_html
+      - name: Deploy sitio a cPanel public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -32,23 +32,11 @@ jobs:
             **/__pycache__/**
             **/*.pyc
             **/.env
-
-      - name: Deploy to cPanel public_html/mascotia.app
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT }}
-          local-dir: ./
-          server-dir: /public_html/mascotia.app/
-          exclude: |
-            **/.git*
-            **/.github/**
-            **/.cursor/**
-            **/.vscode/**
-            **/.venv/**
-            **/venv/**
-            **/__pycache__/**
-            **/*.pyc
-            **/.env
+            core/**
+            mascotia_project/**
+            templates/**
+            manage.py
+            requirements.txt
+            .cpanel.yml
+            DEPLOY_GIT_CPANEL.md
+            .env.example
