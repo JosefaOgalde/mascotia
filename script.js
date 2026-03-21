@@ -49,7 +49,7 @@ const FOOTER_TEMPLATE = `
 `;
 
 const HERO_BANNERS = [
-  "assets/banner_principal_1.png",
+  "assets/banner_principal_1.jpeg",
   "assets/banner_principal_1.png",
 ];
 
@@ -78,7 +78,7 @@ function setupHeroCarousel() {
   }
 
   const availableBanners = HERO_BANNERS.filter(Boolean);
-  const fallbackBanner = "assets/banner_principal_1.png";
+  const fallbackBanner = "assets/banner_principal_1.jpeg";
   const sourceBanners = availableBanners.length ? availableBanners : [fallbackBanner];
   const normalizedBanners =
     sourceBanners.length >= 2 ? sourceBanners : [sourceBanners[0], sourceBanners[0]];

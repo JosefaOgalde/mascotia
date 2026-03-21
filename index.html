@@ -31,10 +31,12 @@
 
         <article class="hero-card">
           <h1>Mascotia.app</h1>
-          <p>Bitácora Digital de Salud Animal para Tutores.</p>
+          <p>Adopta a tu mascota o infórmate con inteligencia artificial para cuidar a los regalones.</p>
           <div class="hero-cta">
-            <a href="#" class="btn btn-fill"><i class="fa-regular fa-pen-to-square"></i> Comenzar Ahora</a>
-            <a href="#" class="btn btn-outline"><i class="fa-solid fa-key"></i> Ya tengo cuenta</a>
+            <button class="btn btn-fill" data-open-newsletter>
+              <i class="fa-regular fa-envelope"></i>
+              Suscribete a nuestro newsletter
+            </button>
           </div>
         </article>
       </section>
@@ -43,31 +45,48 @@
         <div class="container">
           <header class="section-heading">
             <h2>
-              Un sistema completo para
-              <span>gestionar la información clínica</span>
-              de tus mascotas
+              Noticias para
+              <span>cuidar mejor a tus regalones</span>
             </h2>
             <p>
-              Accede al historial clínico de forma rápida, clara y siempre disponible
-              para asegurar un <strong>cuidado responsable y constante.</strong>
+              Lee recomendaciones semanales con informacion simple y util para tomar
+              mejores decisiones en la salud y bienestar de tu mascota.
             </p>
           </header>
 
-          <div class="feature-grid">
-            <article class="feature-card">
-              <div class="icon-circle"><i class="fa-regular fa-folder-open"></i></div>
-              <h3>Historial Digital</h3>
-              <p>Guarda y accede al historial médico completo de tus mascotas en cualquier momento.</p>
+          <div class="news-grid">
+            <article class="news-card">
+              <img
+                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80"
+                alt="Perro siendo revisado por veterinario"
+                class="news-thumb"
+              />
+              <div class="news-content">
+                <span class="news-meta">Salud preventiva - Marzo 2026</span>
+                <h3>Como preparar a tu mascota para su control veterinario</h3>
+                <p>
+                  Aprende los pasos clave para disminuir el estres antes de la consulta
+                  y obtener una evaluacion clinica mas precisa.
+                </p>
+                <a href="#" class="btn btn-outline">Leer noticia</a>
+              </div>
             </article>
-            <article class="feature-card">
-              <div class="icon-circle"><i class="fa-regular fa-bell"></i></div>
-              <h3>Recordatorios</h3>
-              <p>Recibe notificaciones de vacunas, desparasitaciones y citas veterinarias.</p>
-            </article>
-            <article class="feature-card">
-              <div class="icon-circle"><i class="fa-solid fa-lock"></i></div>
-              <h3>Seguro y Confiable</h3>
-              <p>Tus datos están protegidos con los más altos estándares de seguridad.</p>
+
+            <article class="news-card">
+              <img
+                src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1200&q=80"
+                alt="Gato descansando en un espacio comodo"
+                class="news-thumb"
+              />
+              <div class="news-content">
+                <span class="news-meta">Bienestar animal - Marzo 2026</span>
+                <h3>Enriquecimiento ambiental en casa: juegos y rutinas saludables</h3>
+                <p>
+                  Descubre ideas simples para mejorar la actividad fisica y mental de tu
+                  mascota con rutinas diarias y espacios adecuados.
+                </p>
+                <a href="#" class="btn btn-outline">Leer noticia</a>
+              </div>
             </article>
           </div>
         </div>
@@ -93,6 +112,30 @@
         </div>
       </section>
     </main>
+
+    <div class="newsletter-modal" data-newsletter-modal hidden>
+      <div class="newsletter-modal__backdrop" data-close-newsletter></div>
+      <section class="newsletter-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
+        <button class="newsletter-modal__close" type="button" data-close-newsletter aria-label="Cerrar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h2 id="newsletter-title">Suscribete a nuestro newsletter</h2>
+        <p>Recibe novedades y consejos para cuidar a tus regalones.</p>
+
+        <form class="newsletter-form" data-newsletter-form>
+          <label for="newsletter-email">Correo electronico</label>
+          <input
+            id="newsletter-email"
+            name="email"
+            type="email"
+            placeholder="tu-correo@ejemplo.com"
+            required
+          />
+          <button type="submit" class="btn btn-fill">Suscribirme</button>
+          <p class="newsletter-form__message" data-newsletter-message></p>
+        </form>
+      </section>
+    </div>
 
     <div data-global-footer></div>
 
