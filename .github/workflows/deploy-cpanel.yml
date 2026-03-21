@@ -13,7 +13,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to cPanel via FTP
+      - name: Deploy to cPanel public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/.cursor/**
+            **/.vscode/**
+            **/.venv/**
+            **/venv/**
+            **/__pycache__/**
+            **/*.pyc
+            **/.env
+
+      - name: Deploy to cPanel public_html/mascotia.app
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
