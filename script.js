@@ -33,18 +33,16 @@ const FOOTER_TEMPLATE = `
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
-        <p><i class="fa-regular fa-envelope"></i> josef@mascotia.app</p>
-        <p><i class="fa-solid fa-earth-americas"></i> Santiago, Chile</p>
+        <p><i class="fa-regular fa-envelope"></i> josefa@mascotia.app</p>
+        <p><i class="fa-solid fa-earth-americas"></i> Chile</p>
       </div>
     </div>
 
     <div class="container footer-bottom">
       <span>© <span id="year"></span> Mascotia.app. Todos los derechos reservados.</span>
       <div class="socials">
-        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="mailto:josefa@mascotia.app" aria-label="Correo"><i class="fa-regular fa-envelope"></i></a>
         <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
       </div>
     </div>
   </footer>
