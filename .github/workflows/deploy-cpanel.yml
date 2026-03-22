@@ -22,7 +22,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           local-dir: ./
           server-dir: /
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
           exclude: |
             **/.git*
             **/.github/**
@@ -35,11 +35,3 @@ jobs:
             **/.env
             cgi-bin/**
             .well-known/**
-            core/**
-            mascotia_project/**
-            templates/**
-            manage.py
-            requirements.txt
-            .cpanel.yml
-            DEPLOY_GIT_CPANEL.md
-            .env.example

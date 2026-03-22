@@ -26,7 +26,14 @@
         <div class="hero-banner">
           <div class="hero-slides" data-hero-slides></div>
           <div class="hero-overlay"></div>
+          <button class="hero-arrow hero-arrow-prev" type="button" data-hero-prev aria-label="Banner anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="hero-arrow hero-arrow-next" type="button" data-hero-next aria-label="Banner siguiente">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
         </div>
+        <div class="hero-indicators" data-hero-indicators aria-label="Indicadores de banner"></div>
 
         <article class="hero-card">
           <h1>Mascotia.app</h1>
@@ -40,74 +47,163 @@
         </article>
       </section>
 
-      <section class="features">
+      <section class="quick-access">
+        <div class="container">
+          <header class="section-heading">
+            <h2>Seccion de adopcion</h2>
+            <p>
+              Conoce mascotas que buscan familia. Haz click en cada tarjeta para ver la
+              publicacion completa.
+            </p>
+          </header>
+          <div class="quick-carousel" data-quick-carousel></div>
+        </div>
+      </section>
+
+      <section class="features news-section">
         <div class="container">
           <header class="section-heading">
             <h2>
               Noticias para
-              <span>cuidar mejor a tus regalones</span>
+              <span>cuidar mejor</span>
+              a tus regalones
             </h2>
-            <p>
-              Lee recomendaciones semanales con informacion simple y util para tomar
-              mejores decisiones en la salud y bienestar de tu mascota.
-            </p>
+            <p>Informacion actualizada sobre bienestar animal y tenencia responsable.</p>
           </header>
 
-          <div class="news-grid">
+          <div class="news-grid-three">
             <article class="news-card">
               <img
-                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80"
-                alt="Perro siendo revisado por veterinario"
+                src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80"
+                alt="Mascota viajando con su tutor"
                 class="news-thumb"
               />
+              <button
+                class="news-go-btn"
+                type="button"
+                data-news-url="https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2026/02/13/record-de-viajes-con-mascotas-en-aereopuesto-de-santiago-casi-10-mil-animales-arribaron-en-2025.shtml"
+              >
+                Ver noticia
+              </button>
               <div class="news-content">
-                <span class="news-meta">Salud preventiva - Marzo 2026</span>
-                <h3>Como preparar a tu mascota para su control veterinario</h3>
+                <span class="news-meta">BioBioChile</span>
+                <h3>Record de viajes con mascotas en aeropuerto de Santiago</h3>
                 <p>
-                  Aprende los pasos clave para disminuir el estres antes de la consulta
-                  y obtener una evaluacion clinica mas precisa.
+                  Casi 10 mil animales arribaron durante 2025 junto a sus tutores.
                 </p>
-                <a href="#" class="btn btn-outline">Leer noticia</a>
               </div>
             </article>
 
             <article class="news-card">
               <img
-                src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1200&q=80"
-                alt="Gato descansando en un espacio comodo"
+                src="https://images.unsplash.com/photo-1560743641-3914f2c45636?auto=format&fit=crop&w=1200&q=80"
+                alt="Personas corriendo con mascotas"
                 class="news-thumb"
               />
+              <button
+                class="news-go-btn"
+                type="button"
+                data-news-url="https://www.diarioeldia.cl/noticias/2026/02/15/132829-exitosa-convocatoria-mas-de-1500-personas-participaron-con-sus-mascotas-en-perruning-chile-2026"
+              >
+                Ver noticia
+              </button>
               <div class="news-content">
-                <span class="news-meta">Bienestar animal - Marzo 2026</span>
-                <h3>Enriquecimiento ambiental en casa: juegos y rutinas saludables</h3>
+                <span class="news-meta">Diario El Dia</span>
+                <h3>Mas de 1.500 personas participaron en Perruning Chile 2026</h3>
                 <p>
-                  Descubre ideas simples para mejorar la actividad fisica y mental de tu
-                  mascota con rutinas diarias y espacios adecuados.
+                  Jornada enfocada en adopcion, bienestar animal y tenencia responsable.
                 </p>
-                <a href="#" class="btn btn-outline">Leer noticia</a>
+              </div>
+            </article>
+
+            <article class="news-card">
+              <img
+                src="https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?auto=format&fit=crop&w=1200&q=80"
+                alt="Consejos de cuidado animal"
+                class="news-thumb"
+              />
+              <button
+                class="news-go-btn"
+                type="button"
+                data-news-url="https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2026/02/13/record-de-viajes-con-mascotas-en-aereopuesto-de-santiago-casi-10-mil-animales-arribaron-en-2025.shtml"
+              >
+                Ver noticia
+              </button>
+              <div class="news-content">
+                <span class="news-meta">Tendencias</span>
+                <h3>Como preparar a tu mascota para viajes largos y traslados</h3>
+                <p>
+                  Recomendaciones practicas para viajar de forma segura con perros y gatos.
+                </p>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="quick-access">
-        <div class="container quick-grid">
-          <article class="quick-card quick-vet">
-            <div class="quick-content">
-              <h3>Clínicas Veterinarias</h3>
-              <p>Encuentra la más cercana</p>
-              <a href="#" class="btn btn-light"><i class="fa-solid fa-location-dot"></i> Buscar ahora</a>
-            </div>
-          </article>
+      <section class="features blog-section">
+        <div class="container">
+          <header class="section-heading">
+            <h2>Blog Mascotia</h2>
+            <p>Guias cortas para ayudarte en el dia a dia con tus mascotas.</p>
+          </header>
 
-          <article class="quick-card quick-store">
-            <div class="quick-content">
-              <h3>Alimentos y Accesorios</h3>
-              <p>Encuentra la tienda más cercana</p>
-              <a href="#" class="btn btn-light"><i class="fa-solid fa-location-dot"></i> Buscar ahora</a>
-            </div>
-          </article>
+          <div class="blog-mini-grid">
+            <article class="blog-mini-card">
+              <h3>Vacunas al dia</h3>
+              <p>Calendario basico de vacunas para perros y gatos.</p>
+            </article>
+            <article class="blog-mini-card">
+              <h3>Alimentacion saludable</h3>
+              <p>Como elegir alimentos segun edad y nivel de actividad.</p>
+            </article>
+            <article class="blog-mini-card">
+              <h3>Primeros cuidados</h3>
+              <p>Checklist esencial para recibir una mascota en casa.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="adoption-form-section">
+        <div class="container">
+          <header class="section-heading">
+            <h2>Formulario de adopcion</h2>
+            <p>
+              Completa este formulario si buscas adoptar una mascota o si necesitas encontrar
+              una familia para una mascota.
+            </p>
+          </header>
+
+          <form class="adoption-form" data-adoption-form>
+            <label for="request_type">Tipo de solicitud</label>
+            <select id="request_type" name="request_type" required>
+              <option value="">Selecciona una opcion</option>
+              <option value="busco_adoptar">Busco adoptar una mascota</option>
+              <option value="quiero_dar_en_adopcion">Quiero encontrar familia para una mascota</option>
+            </select>
+
+            <label for="full_name">Nombre completo</label>
+            <input id="full_name" name="full_name" type="text" required />
+
+            <label for="adoption_email">Correo electronico</label>
+            <input id="adoption_email" name="email" type="email" required />
+
+            <label for="phone">Telefono</label>
+            <input id="phone" name="phone" type="text" />
+
+            <label for="city">Ciudad</label>
+            <input id="city" name="city" type="text" />
+
+            <label for="pet_type">Tipo de mascota</label>
+            <input id="pet_type" name="pet_type" type="text" placeholder="Perro, gato, otra" />
+
+            <label for="details">Descripcion</label>
+            <textarea id="details" name="details" rows="4" required></textarea>
+
+            <button type="submit" class="btn btn-fill">Enviar formulario</button>
+            <p class="newsletter-form__message" data-adoption-message></p>
+          </form>
         </div>
       </section>
     </main>
