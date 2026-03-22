@@ -31,7 +31,9 @@ def load_dotenv_file(dotenv_path):
         if not stripped or stripped.startswith("#") or "=" not in stripped:
             continue
         key, value = stripped.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip())
+        # Prioriza los valores del .env para evitar conflictos
+        # con variables inyectadas por el hosting (ej. MYSQL_USER=MySQL).
+        os.environ[key.strip()] = value.strip()
 
 
 load_dotenv_file(BASE_DIR / ".env")
@@ -149,7 +151,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 

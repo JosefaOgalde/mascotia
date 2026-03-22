@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
+from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -106,6 +107,73 @@ def backoffice_newsletter(request):
             "total_subscribers": subscribers.count(),
         },
     )
+
+
+@login_required
+@user_passes_test(lambda user: user.is_staff, login_url="backoffice_login")
+def backoffice_download_newsletter_csv(request):
+    response = HttpResponse(content_type="text/csv; charset=utf-8")
+    timestamp = timezone.localtime().strftime("%Y%m%d_%H%M%S")
+    response["Content-Disposition"] = f'attachment; filename="newsletter_{timestamp}.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(["email", "fecha_registro"])
+    for subscriber in Subscriber.objects.order_by("-created_at"):
+        writer.writerow([subscriber.email, timezone.localtime(subscriber.created_at).isoformat()])
+
+    return response
+
+
+@login_required
+@user_passes_test(lambda user: user.is_staff, login_url="backoffice_login")
+def backoffice_download_adoption_csv(request):
+    response = HttpResponse(content_type="text/csv; charset=utf-8")
+    timestamp = timezone.localtime().strftime("%Y%m%d_%H%M%S")
+    response["Content-Disposition"] = f'attachment; filename="formularios_adopcion_{timestamp}.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(
+        [
+            "tipo_solicitud",
+            "nombre_completo",
+            "email",
+            "telefono",
+            "ciudad",
+            "tipo_mascota",
+            "detalle",
+            "fecha_registro",
+        ]
+    )
+
+    for item in AdoptionSeeker.objects.order_by("-created_at"):
+        writer.writerow(
+            [
+                "busco_adoptar",
+                item.full_name,
+                item.email,
+                item.phone,
+                item.city,
+                item.pet_type,
+                item.details,
+                timezone.localtime(item.created_at).isoformat(),
+            ]
+        )
+
+    for item in RehomeRequest.objects.order_by("-created_at"):
+        writer.writerow(
+            [
+                "quiero_dar_en_adopcion",
+                item.full_name,
+                item.email,
+                item.phone,
+                item.city,
+                item.pet_type,
+                item.details,
+                timezone.localtime(item.created_at).isoformat(),
+            ]
+        )
+
+    return response
 
 
 @ensure_csrf_cookie

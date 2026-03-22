@@ -1,6 +1,8 @@
 from django.urls import path
 
 from .views import (
+    backoffice_download_adoption_csv,
+    backoffice_download_newsletter_csv,
     backoffice_login,
     backoffice_logout,
     backoffice_newsletter,
@@ -16,4 +18,14 @@ urlpatterns = [
     path("backoffice/login/", backoffice_login, name="backoffice_login"),
     path("backoffice/logout/", backoffice_logout, name="backoffice_logout"),
     path("backoffice/newsletter/", backoffice_newsletter, name="backoffice_newsletter"),
+    path(
+        "backoffice/download/newsletter/",
+        backoffice_download_newsletter_csv,
+        name="backoffice_download_newsletter_csv",
+    ),
+    path(
+        "backoffice/download/adoption/",
+        backoffice_download_adoption_csv,
+        name="backoffice_download_adoption_csv",
+    ),
 ]

@@ -318,6 +318,57 @@ async function parseJsonResponse(response) {
   }
 }
 
+function setupFeedbackModal() {
+  const modal = document.createElement("div");
+  modal.className = "news-modal";
+  modal.hidden = true;
+  modal.innerHTML = `
+    <div class="news-modal__backdrop" data-feedback-modal-close></div>
+    <section
+      class="news-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="feedback-modal-title"
+    >
+      <h3 id="feedback-modal-title"></h3>
+      <div class="news-modal__actions">
+        <button type="button" class="btn btn-fill" data-feedback-modal-close>Aceptar</button>
+      </div>
+    </section>
+  `;
+  document.body.appendChild(modal);
+
+  const closeButtons = [...modal.querySelectorAll("[data-feedback-modal-close]")];
+  const titleNode = modal.querySelector("#feedback-modal-title");
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+
+  function openModal(titleText) {
+    if (titleNode) {
+      titleNode.textContent = titleText;
+    }
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+  }
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeModal);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      closeModal();
+    }
+  });
+
+  return openModal;
+}
+
+const openFeedbackModal = setupFeedbackModal();
+
 function setupNewsletterModal() {
   const modal = document.querySelector("[data-newsletter-modal]");
   const openButtons = [...document.querySelectorAll("[data-open-newsletter]")];
@@ -410,6 +461,13 @@ function setupNewsletterModal() {
       const data = await parseJsonResponse(response);
 
       if (!response.ok || !data.ok) {
+        if (data.already_exists) {
+          setMessage("", false);
+          closeModal();
+          openFeedbackModal("Cuenta ya registrada");
+          return;
+        }
+
         const fallbackMessage = response.status === 404
           ? "El servicio de suscripcion no esta disponible en este momento."
           : "No fue posible completar la suscripcion.";
@@ -418,8 +476,8 @@ function setupNewsletterModal() {
       }
 
       setMessage("", true);
-      window.alert("Te suscribimos");
       closeModal();
+      openFeedbackModal("Te suscribimos");
       window.scrollTo({ top: 0, behavior: "smooth" });
       form.reset();
     } catch (_error) {
@@ -483,7 +541,8 @@ function setupAdoptionForm() {
         return;
       }
 
-      setMessage(data.message || "Formulario enviado correctamente.", true);
+      setMessage("", true);
+      openFeedbackModal("Ya se envio el formulario");
       form.reset();
     } catch (_error) {
       setMessage("Error de conexion. Intenta nuevamente.", false);
