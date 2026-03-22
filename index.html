@@ -24,7 +24,7 @@
 
     <main>
       <section class="hero-wrap container">
-        <div class="hero-banner">
+        <div class="hero-banner" data-hero-open-newsletter>
           <div class="hero-slides" data-hero-slides></div>
           <div class="hero-overlay"></div>
           <button class="hero-arrow hero-arrow-prev" type="button" data-hero-prev aria-label="Banner anterior">
@@ -55,8 +55,8 @@
         <div class="container">
           <header class="section-heading">
             <p>
-              Conoce mascotas que buscan familia. Haz click en cada tarjeta para ver la
-              publicacion completa.
+              Conoce mascotas que buscan familia.<br />
+              Haz click en cada tarjeta para ver la publicacion completa.
             </p>
           </header>
           <div class="quick-carousel" data-quick-carousel></div>
@@ -82,19 +82,19 @@
                 class="news-thumb"
                 onerror="if(!this.dataset.fallbackTried){this.dataset.fallbackTried='1';this.src='/static/assets/news_1.png';}"
               />
-              <button
-                class="news-go-btn"
-                type="button"
-                data-news-url="https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2026/02/13/record-de-viajes-con-mascotas-en-aereopuesto-de-santiago-casi-10-mil-animales-arribaron-en-2025.shtml"
-              >
-                Ver noticia
-              </button>
               <div class="news-content">
                 <span class="news-meta">BioBioChile</span>
                 <h3>Record de viajes con mascotas en aeropuerto de Santiago</h3>
                 <p>
                   Casi 10 mil animales arribaron durante 2025 junto a sus tutores.
                 </p>
+                <button
+                  class="news-go-btn"
+                  type="button"
+                  data-news-url="https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2026/02/13/record-de-viajes-con-mascotas-en-aereopuesto-de-santiago-casi-10-mil-animales-arribaron-en-2025.shtml"
+                >
+                  Ver noticia
+                </button>
               </div>
             </article>
 
@@ -105,19 +105,19 @@
                 class="news-thumb"
                 onerror="if(!this.dataset.fallbackTried){this.dataset.fallbackTried='1';this.src='/static/assets/news_2.webp';}"
               />
-              <button
-                class="news-go-btn"
-                type="button"
-                data-news-url="https://www.diarioeldia.cl/noticias/2026/02/15/132829-exitosa-convocatoria-mas-de-1500-personas-participaron-con-sus-mascotas-en-perruning-chile-2026"
-              >
-                Ver noticia
-              </button>
               <div class="news-content">
                 <span class="news-meta">Diario El Dia</span>
                 <h3>Mas de 1.500 personas participaron en Perruning Chile 2026</h3>
                 <p>
                   Jornada enfocada en adopcion, bienestar animal y tenencia responsable.
                 </p>
+                <button
+                  class="news-go-btn"
+                  type="button"
+                  data-news-url="https://www.diarioeldia.cl/noticias/2026/02/15/132829-exitosa-convocatoria-mas-de-1500-personas-participaron-con-sus-mascotas-en-perruning-chile-2026"
+                >
+                  Ver noticia
+                </button>
               </div>
             </article>
 
@@ -128,19 +128,19 @@
                 class="news-thumb"
                 onerror="if(!this.dataset.fallbackTried){this.dataset.fallbackTried='1';this.src='/static/assets/news_3.png';}"
               />
-              <button
-                class="news-go-btn"
-                type="button"
-                data-news-url="https://www.24horas.cl/tendencias/espectaculos/las-voy-a-extranar-el-doloroso-mensaje-de-edo-caroe-tras-doble-perdida-familiar"
-              >
-                Ver noticia
-              </button>
               <div class="news-content">
                 <span class="news-meta">24 Horas</span>
                 <h3>El doloroso mensaje de Edo Caroe tras la doble perdida de sus mascotas</h3>
                 <p>
                   El humorista compartio una emotiva despedida y su experiencia de duelo familiar.
                 </p>
+                <button
+                  class="news-go-btn"
+                  type="button"
+                  data-news-url="https://www.24horas.cl/tendencias/espectaculos/las-voy-a-extranar-el-doloroso-mensaje-de-edo-caroe-tras-doble-perdida-familiar"
+                >
+                  Ver noticia
+                </button>
               </div>
             </article>
           </div>
@@ -156,16 +156,37 @@
 
           <div class="blog-mini-grid">
             <article class="blog-mini-card">
+              <img
+                class="blog-mini-thumb"
+                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1000&q=80"
+                alt="Perro en control veterinario"
+                loading="lazy"
+              />
               <h3>Vacunas al dia</h3>
               <p>Calendario basico de vacunas para perros y gatos.</p>
+              <button type="button" class="btn btn-outline blog-more-btn">Ver mas</button>
             </article>
             <article class="blog-mini-card">
+              <img
+                class="blog-mini-thumb"
+                src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1000&q=80"
+                alt="Mascota comiendo alimento saludable"
+                loading="lazy"
+              />
               <h3>Alimentacion saludable</h3>
               <p>Como elegir alimentos segun edad y nivel de actividad.</p>
+              <button type="button" class="btn btn-outline blog-more-btn">Ver mas</button>
             </article>
             <article class="blog-mini-card">
+              <img
+                class="blog-mini-thumb"
+                src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=1000&q=80"
+                alt="Familia recibiendo mascota en casa"
+                loading="lazy"
+              />
               <h3>Primeros cuidados</h3>
               <p>Checklist esencial para recibir una mascota en casa.</p>
+              <button type="button" class="btn btn-outline blog-more-btn">Ver mas</button>
             </article>
           </div>
         </div>
@@ -195,11 +216,12 @@
               <option value="">Selecciona una opcion</option>
               <option value="busco_adoptar">Busco adoptar una mascota</option>
               <option value="quiero_dar_en_adopcion">Quiero encontrar familia para una mascota</option>
+              <option value="otro">Otro</option>
             </select>
             <small>Elige la opcion que mejor describa tu caso.</small>
 
             <label for="full_name">Nombre completo</label>
-            <input id="full_name" name="full_name" type="text" placeholder="Ej: Josefa Ogalde" required />
+            <input id="full_name" name="full_name" type="text" placeholder="Ej: Sofia Gonzalez" required />
 
             <div class="adoption-form-row">
               <div>

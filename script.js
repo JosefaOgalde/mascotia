@@ -21,12 +21,6 @@ const FOOTER_TEMPLATE = `
 
     <div class="container footer-bottom">
       <span>© <span id="year"></span> Mascotia.app. Todos los derechos reservados.</span>
-      <div class="socials">
-        <a href="mailto:josefa@mascotia.app" aria-label="Correo"><i class="fa-regular fa-envelope"></i></a>
-        <a href="https://instagram.com/mascotia.app" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <i class="fa-brands fa-instagram"></i>
-        </a>
-      </div>
     </div>
   </footer>
 `;
@@ -324,6 +318,7 @@ function setupNewsletterModal() {
   }
 
   const emailInput = form.querySelector("input[name='email']");
+  const heroBanner = document.querySelector("[data-hero-open-newsletter]");
 
   function openModal() {
     modal.hidden = false;
@@ -347,6 +342,15 @@ function setupNewsletterModal() {
   openButtons.forEach((button) => {
     button.addEventListener("click", openModal);
   });
+
+  if (heroBanner) {
+    heroBanner.addEventListener("click", (event) => {
+      if (event.target.closest(".hero-arrow, .hero-indicator-dot")) {
+        return;
+      }
+      openModal();
+    });
+  }
 
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-open-newsletter]");
@@ -433,6 +437,11 @@ function setupAdoptionForm() {
 
     if (!payload.request_type || !payload.full_name || !payload.email || !payload.details) {
       setMessage("Completa los campos obligatorios.", false);
+      return;
+    }
+
+    if (!["busco_adoptar", "quiero_dar_en_adopcion", "otro"].includes(payload.request_type)) {
+      setMessage("Selecciona una opcion valida.", false);
       return;
     }
 

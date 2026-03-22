@@ -162,7 +162,7 @@ def submit_adoption_form(request):
             status=429,
         )
 
-    if request_type not in {"busco_adoptar", "quiero_dar_en_adopcion"}:
+    if request_type not in {"busco_adoptar", "quiero_dar_en_adopcion", "otro"}:
         return JsonResponse({"ok": False, "message": "Selecciona el tipo de solicitud."}, status=400)
 
     if not full_name or not email or not details:
@@ -176,7 +176,7 @@ def submit_adoption_form(request):
     if len(details) > 3000:
         return JsonResponse({"ok": False, "message": "La descripcion es demasiado extensa."}, status=400)
 
-    if request_type == "busco_adoptar":
+    if request_type in {"busco_adoptar", "otro"}:
         AdoptionSeeker.objects.create(
             full_name=full_name,
             email=email,
