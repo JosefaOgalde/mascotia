@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.conf import settings
+from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -42,6 +43,19 @@ def append_adoption_row_to_sheet(row):
                 ]
             )
         writer.writerow(row)
+
+
+def append_newsletter_row_to_sheet(created_at, email):
+    export_dir = Path(settings.BASE_DIR) / "exports"
+    export_dir.mkdir(parents=True, exist_ok=True)
+    csv_path = export_dir / "newsletter_live.csv"
+
+    file_exists = csv_path.exists()
+    with csv_path.open("a", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+        if not file_exists:
+            writer.writerow(["fecha", "email"])
+        writer.writerow([timezone.localtime(created_at).isoformat(), email])
 
 
 def backoffice_login(request):
@@ -154,6 +168,12 @@ def subscribe_newsletter(request):
             },
             status=409,
         )
+
+    # Backup CSV for easy spreadsheet access from cPanel File Manager.
+    try:
+        append_newsletter_row_to_sheet(subscriber.created_at, subscriber.email)
+    except Exception:
+        pass
 
     return JsonResponse({"ok": True, "message": "Suscripcion realizada con exito."})
 
