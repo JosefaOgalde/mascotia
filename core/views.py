@@ -1,4 +1,6 @@
 import json
+import csv
+from pathlib import Path
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -12,10 +14,34 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.conf import settings
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from .models import AdoptionSeeker, RehomeRequest, Subscriber
 from .security import get_client_ip, is_rate_limited
+
+
+def append_adoption_row_to_sheet(row):
+    export_dir = Path(settings.BASE_DIR) / "exports"
+    export_dir.mkdir(parents=True, exist_ok=True)
+    csv_path = export_dir / "formularios_adopcion_live.csv"
+
+    file_exists = csv_path.exists()
+    with csv_path.open("a", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+        if not file_exists:
+            writer.writerow(
+                [
+                    "tipo_solicitud",
+                    "nombre_completo",
+                    "email",
+                    "telefono",
+                    "ciudad",
+                    "tipo_mascota",
+                    "detalle",
+                ]
+            )
+        writer.writerow(row)
 
 
 def backoffice_login(request):
@@ -74,6 +100,7 @@ def home(request):
 
 
 @require_POST
+@csrf_exempt
 def subscribe_newsletter(request):
     email = ""
 
@@ -132,6 +159,7 @@ def subscribe_newsletter(request):
 
 
 @require_POST
+@csrf_exempt
 def submit_adoption_form(request):
     payload = {}
 
@@ -194,6 +222,14 @@ def submit_adoption_form(request):
             pet_type=pet_type,
             details=details,
         )
+
+    # Backup CSV for easy spreadsheet download from cPanel File Manager.
+    try:
+        append_adoption_row_to_sheet(
+            [request_type, full_name, email, phone, city, pet_type, details]
+        )
+    except Exception:
+        pass
 
     subject = "Nueva solicitud de adopcion - Mascotia.app"
     message = (

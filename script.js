@@ -31,7 +31,7 @@ const HERO_BANNERS = [
   "assets/banner_principal_3.png",
 ];
 
-const HERO_ROTATION_MS = 15000;
+const HERO_ROTATION_MS = 5000;
 const QUICK_CAROUSEL_MS = 3500;
 const QUICK_VISIBLE_COUNT = 4;
 const QUICK_CAROUSEL_ITEMS = [
@@ -306,6 +306,18 @@ function getCookie(name) {
   return cookieParts.pop().split(";").shift();
 }
 
+async function parseJsonResponse(response) {
+  const rawText = await response.text();
+  if (!rawText) {
+    return {};
+  }
+  try {
+    return JSON.parse(rawText);
+  } catch (_error) {
+    return {};
+  }
+}
+
 function setupNewsletterModal() {
   const modal = document.querySelector("[data-newsletter-modal]");
   const openButtons = [...document.querySelectorAll("[data-open-newsletter]")];
@@ -395,10 +407,13 @@ function setupNewsletterModal() {
         body: JSON.stringify({ email, website }),
       });
 
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
 
       if (!response.ok || !data.ok) {
-        setMessage(data.message || "No fue posible completar la suscripcion.", false);
+        const fallbackMessage = response.status === 404
+          ? "El servicio de suscripcion no esta disponible en este momento."
+          : "No fue posible completar la suscripcion.";
+        setMessage(data.message || fallbackMessage, false);
         return;
       }
 
@@ -458,10 +473,13 @@ function setupAdoptionForm() {
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
 
       if (!response.ok || !data.ok) {
-        setMessage(data.message || "No fue posible enviar el formulario.", false);
+        const fallbackMessage = response.status === 404
+          ? "El servicio del formulario no esta disponible en este momento."
+          : "No fue posible enviar el formulario.";
+        setMessage(data.message || fallbackMessage, false);
         return;
       }
 
