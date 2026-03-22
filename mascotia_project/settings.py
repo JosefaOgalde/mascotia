@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,8 +31,11 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
 
 ALLOWED_HOSTS = [host.strip() for host in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
 
-if not DEBUG and ("*" in ALLOWED_HOSTS or not ALLOWED_HOSTS):
-    raise ImproperlyConfigured("Configura DJANGO_ALLOWED_HOSTS sin wildcard en produccion.")
+if not DEBUG:
+    filtered_hosts = [host for host in ALLOWED_HOSTS if host != "*"]
+    if not filtered_hosts:
+        filtered_hosts = ["mascotia.app", "www.mascotia.app"]
+    ALLOWED_HOSTS = filtered_hosts
 
 
 # Application definition
