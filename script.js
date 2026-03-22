@@ -11,11 +11,11 @@ const FOOTER_TEMPLATE = `
     <div class="container footer-main">
       <div class="footer-col">
         <h4>mascotia.app</h4>
+        <p>Chile</p>
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
         <p><i class="fa-regular fa-envelope"></i> josefa@mascotia.app</p>
-        <p><i class="fa-solid fa-earth-americas"></i> Chile</p>
       </div>
     </div>
 
