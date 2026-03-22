@@ -467,21 +467,101 @@ function setupAdoptionForm() {
 setupAdoptionForm();
 
 function setupNewsLinks() {
+  const modal = document.createElement("div");
+  modal.className = "news-modal";
+  modal.hidden = true;
+  modal.innerHTML = `
+    <div class="news-modal__backdrop" data-news-modal-close></div>
+    <section class="news-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="news-modal-title">
+      <h3 id="news-modal-title">¿Deseas visitar el sitio de la noticia?</h3>
+      <div class="news-modal__actions">
+        <button type="button" class="btn btn-outline" data-news-modal-close>No, quedarme aqui</button>
+        <button type="button" class="btn btn-fill" data-news-modal-confirm>Si, visitar sitio</button>
+      </div>
+    </section>
+  `;
+  document.body.appendChild(modal);
+
+  const closeButtons = [...modal.querySelectorAll("[data-news-modal-close]")];
+  const confirmButton = modal.querySelector("[data-news-modal-confirm]");
+  let pendingUrl = "";
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    pendingUrl = "";
+  }
+
+  function openModal(url) {
+    pendingUrl = url;
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+  }
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeModal);
+  });
+
+  if (confirmButton) {
+    confirmButton.addEventListener("click", () => {
+      if (pendingUrl) {
+        window.open(pendingUrl, "_blank", "noopener,noreferrer");
+      }
+      closeModal();
+    });
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      closeModal();
+    }
+  });
+
+  document.querySelectorAll(".news-card").forEach((card) => {
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Abrir noticia");
+  });
+
   document.addEventListener("click", (event) => {
-    const button = event.target.closest(".news-go-btn");
-    if (!button) {
+    const trigger = event.target.closest(".news-go-btn, .news-card");
+    if (!trigger) {
       return;
     }
 
-    const newsUrl = button.getAttribute("data-news-url");
+    const card = trigger.closest(".news-card");
+    if (!card) {
+      return;
+    }
+
+    const button = card.querySelector(".news-go-btn");
+    const newsUrl = trigger.getAttribute("data-news-url") || button?.getAttribute("data-news-url");
     if (!newsUrl) {
       return;
     }
 
-    const shouldOpen = window.confirm("Quieres ir al sitio de esta noticia?");
-    if (shouldOpen) {
-      window.open(newsUrl, "_blank", "noopener,noreferrer");
+    event.preventDefault();
+    openModal(newsUrl);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
     }
+
+    const card = event.target.closest(".news-card");
+    if (!card) {
+      return;
+    }
+
+    const button = card.querySelector(".news-go-btn");
+    const newsUrl = button?.getAttribute("data-news-url");
+    if (!newsUrl) {
+      return;
+    }
+
+    event.preventDefault();
+    openModal(newsUrl);
   });
 }
 

@@ -172,18 +172,21 @@ a {
 }
 
 .hero-arrow::before {
-  font-size: 1.7rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.28rem;
   font-weight: 900;
   line-height: 1;
   color: var(--brand);
 }
 
 .hero-arrow-prev::before {
-  content: "‹";
+  content: "←";
 }
 
 .hero-arrow-next::before {
-  content: "›";
+  content: "→";
 }
 
 .hero-arrow:hover {
@@ -241,6 +244,9 @@ a {
   margin: 8px 0 16px;
   font-size: 1.15rem;
   font-weight: 700;
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
 }
 
 .hero-cta {
@@ -305,6 +311,18 @@ a {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(58, 71, 83, 0.14);
+}
+
+.news-card:focus-visible {
+  outline: 3px solid #b4edf2;
+  outline-offset: 2px;
 }
 
 .news-thumb {
@@ -602,6 +620,8 @@ a {
   right: 10px;
   width: 34px;
   height: 34px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
   border: none;
   background: #ebf9fb;
@@ -619,6 +639,48 @@ a {
 .newsletter-modal__dialog p {
   margin: 0 0 18px;
   color: var(--muted);
+}
+
+.news-modal[hidden] {
+  display: none;
+}
+
+.news-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.news-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(43, 56, 68, 0.55);
+}
+
+.news-modal__dialog {
+  position: relative;
+  width: min(540px, 100%);
+  border-radius: 18px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: 0 20px 45px rgba(43, 56, 68, 0.2);
+  text-align: center;
+}
+
+.news-modal__dialog h3 {
+  margin: 0 0 16px;
+  color: var(--text);
+  font-size: 1.35rem;
+}
+
+.news-modal__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .newsletter-form {
