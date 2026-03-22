@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingreso Backoffice | Mascotia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: "Raleway", Arial, sans-serif;
+        background: #f4f5f6;
+        color: #3a4753;
+      }
+      .card {
+        width: min(440px, calc(100% - 32px));
+        background: #fff;
+        border: 1px solid #dbe3ea;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 16px 34px rgba(58, 71, 83, 0.12);
+      }
+      h1 {
+        margin: 0 0 8px;
+        color: #00acbb;
+        font-size: 1.9rem;
+      }
+      p {
+        margin: 0 0 18px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 6px;
+        font-weight: 700;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #dbe3ea;
+        border-radius: 10px;
+        padding: 11px 12px;
+        font-size: 1rem;
+      }
+      button {
+        width: 100%;
+        margin-top: 16px;
+        border: none;
+        border-radius: 999px;
+        padding: 12px 18px;
+        font-size: 1rem;
+        font-weight: 800;
+        background: #00acbb;
+        color: #fff;
+        cursor: pointer;
+      }
+      .error {
+        margin-top: 12px;
+        color: #b83b3b;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="card">
+      <h1>Backoffice Mascotia</h1>
+      <p>Ingresa con tu usuario administrador para ver correos suscritos.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <label for="username">Usuario</label>
+        <input id="username" name="username" type="text" required />
+
+        <label for="password">Contrasena</label>
+        <input id="password" name="password" type="password" required />
+
+        <button type="submit">Ingresar</button>
+      </form>
+
+      {% if error_message %}
+      <p class="error">{{ error_message }}</p>
+      {% endif %}
+    </section>
+  </body>
+  </html>

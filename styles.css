@@ -156,18 +156,40 @@ a {
   transform: translateY(-50%);
   width: 42px;
   height: 42px;
-  border: none;
+  border: 2px solid rgba(0, 172, 187, 0.35);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.84);
-  color: var(--brand-dark);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--brand);
   display: grid;
   place-items: center;
   cursor: pointer;
   z-index: 3;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.14);
+}
+
+.hero-arrow i {
+  display: none;
+}
+
+.hero-arrow::before {
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--brand);
+}
+
+.hero-arrow-prev::before {
+  content: "‹";
+}
+
+.hero-arrow-next::before {
+  content: "›";
 }
 
 .hero-arrow:hover {
   background: #fff;
+  border-color: var(--brand);
+  color: var(--brand-dark);
 }
 
 .hero-arrow-prev {
@@ -243,7 +265,7 @@ a {
 }
 
 .news-section {
-  background: #fff;
+  background: var(--bg-soft);
 }
 
 .section-heading {
@@ -385,6 +407,7 @@ a {
 }
 
 .quick-carousel {
+  margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
@@ -496,12 +519,34 @@ a {
   margin: 28px auto 0;
   max-width: 860px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(58, 71, 83, 0.08);
 }
 
 .adoption-form label {
   font-weight: 700;
   color: var(--text);
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+
+.adoption-form small {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.adoption-form .btn-fill {
+  margin-top: 8px;
+}
+
+.adoption-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .adoption-form input,
@@ -614,6 +659,15 @@ a {
   color: #b83b3b;
 }
 
+.bot-trap-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 @media (max-width: 1024px) {
   .section-heading h2 {
     font-size: 2.4rem;
@@ -705,5 +759,14 @@ a {
   .quick-carousel-card,
   .quick-carousel-card img {
     min-height: 220px;
+  }
+
+  .adoption-form {
+    padding: 18px;
+  }
+
+  .adoption-form-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }

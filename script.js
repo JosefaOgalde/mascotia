@@ -35,7 +35,6 @@ const HERO_BANNERS = [
   "assets/banner_principal_1.jpeg",
   "assets/banner_principal_2.png",
   "assets/banner_principal_3.png",
-  "assets/banner_principal_1.png",
 ];
 
 const HERO_ROTATION_MS = 15000;
@@ -43,36 +42,32 @@ const QUICK_CAROUSEL_MS = 3500;
 const QUICK_VISIBLE_COUNT = 4;
 const QUICK_CAROUSEL_ITEMS = [
   {
-    postUrl: "https://www.instagram.com/p/DVoawYQDlJa/?img_index=6",
-    imageUrl: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    postUrl: "https://www.instagram.com/p/DVhSb9lj-hP/?img_index=1",
-    imageUrl: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
     postUrl: "https://www.instagram.com/p/DWCfHwFFmx8/?img_index=1",
-    imageUrl: "https://images.unsplash.com/photo-1560743641-3914f2c45636?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    postUrl: "https://www.instagram.com/p/DVoYMjLAMgu/?img_index=1",
-    imageUrl: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    postUrl: "https://www.instagram.com/p/DT6Vbv1Dw8H/?img_index=2",
-    imageUrl: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    postUrl: "https://www.instagram.com/p/DVWS6VUEb0H/",
-    imageUrl: "https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "/assets/adopcion_1.png",
   },
   {
     postUrl: "https://www.instagram.com/p/DVR5xGpAQ0m/?img_index=1",
-    imageUrl: "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "/assets/adopcion_2.png",
+  },
+  {
+    postUrl: "https://www.instagram.com/p/DVhSb9lj-hP/?img_index=1",
+    imageUrl: "/assets/adopcion_3.png",
+  },
+  {
+    postUrl: "https://www.instagram.com/p/DT6Vbv1Dw8H/?img_index=2",
+    imageUrl: "/assets/adopcion_4.png",
+  },
+  {
+    postUrl: "https://www.instagram.com/p/DVoawYQDlJa/?img_index=6",
+    imageUrl: "/assets/adopcion_5.png",
+  },
+  {
+    postUrl: "https://www.instagram.com/p/DVoYMjLAMgu/?img_index=2",
+    imageUrl: "/assets/adopcion_6.png",
   },
   {
     postUrl: "https://www.instagram.com/p/DWAeGEqDl2D/?img_index=1",
-    imageUrl: "https://images.unsplash.com/photo-1601758174114-e711c0cbaa69?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "/assets/adopcion_7.png",
   },
 ];
 
@@ -107,7 +102,8 @@ function setupHeroCarousel() {
 
   const availableBanners = HERO_BANNERS.filter(Boolean);
   const fallbackBanner = "assets/banner_principal_1.jpeg";
-  const sourceBanners = availableBanners.length ? availableBanners : [fallbackBanner];
+  const uniqueBanners = [...new Set(availableBanners)];
+  const sourceBanners = uniqueBanners.length ? uniqueBanners : [fallbackBanner];
 
   if (sourceBanners.length === 1) {
     slidesContainer.innerHTML = `
@@ -279,12 +275,12 @@ function setupQuickCarousel() {
               class="quick-carousel-link"
               aria-label="Abrir publicacion de Instagram ${index + 1}"
             >
-              <span class="quick-carousel-cta">Quieres adoptarme</span>
+              <span class="quick-carousel-cta">¿Quieres adoptarme?</span>
               <img
                 src="${item.imageUrl}"
                 alt="Mascota en adopcion ${index + 1}"
                 loading="lazy"
-                onerror="this.onerror=null;this.src='assets/banner_principal_1.jpeg';"
+                onerror="if(this.dataset.fallbackTried){this.onerror=null;this.src='/assets/banner_principal_1.jpeg';}else{this.dataset.fallbackTried='1';this.src=this.src.replace('/assets/','/static/assets/');}"
               />
             </a>
           </article>
@@ -375,6 +371,7 @@ function setupNewsletterModal() {
 
     const formData = new FormData(form);
     const email = String(formData.get("email") || "").trim();
+    const website = String(formData.get("website") || "").trim();
 
     if (!email) {
       setMessage("Ingresa un correo valido.", false);
@@ -391,24 +388,23 @@ function setupNewsletterModal() {
           "Content-Type": "application/json",
           "X-CSRFToken": csrfToken,
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, website }),
       });
 
       const data = await response.json();
 
       if (!response.ok || !data.ok) {
-        const mailtoLink = `mailto:josefa@mascotia.app?subject=Suscripcion%20newsletter&body=Hola,%20quiero%20suscribirme%20con%20el%20correo:%20${encodeURIComponent(email)}`;
-        window.location.href = mailtoLink;
-        setMessage("Te redirigimos al correo para completar la suscripcion.", true);
-      } else {
-        setMessage(data.message || "Suscripcion realizada con exito.", true);
+        setMessage(data.message || "No fue posible completar la suscripcion.", false);
+        return;
       }
+
+      setMessage("", true);
+      window.alert("Te suscribimos");
+      closeModal();
+      window.scrollTo({ top: 0, behavior: "smooth" });
       form.reset();
     } catch (_error) {
-      const mailtoLink = `mailto:josefa@mascotia.app?subject=Suscripcion%20newsletter&body=Hola,%20quiero%20suscribirme%20con%20el%20correo:%20${encodeURIComponent(email)}`;
-      window.location.href = mailtoLink;
-      setMessage("Te redirigimos al correo para completar la suscripcion.", true);
-      form.reset();
+      setMessage("Error de conexion. Intenta nuevamente.", false);
     }
   });
 }

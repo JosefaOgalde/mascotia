@@ -50,7 +50,6 @@
       <section class="quick-access">
         <div class="container">
           <header class="section-heading">
-            <h2>Seccion de adopcion</h2>
             <p>
               Conoce mascotas que buscan familia. Haz click en cada tarjeta para ver la
               publicacion completa.
@@ -119,21 +118,21 @@
             <article class="news-card">
               <img
                 src="https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?auto=format&fit=crop&w=1200&q=80"
-                alt="Consejos de cuidado animal"
+                alt="Fiscalizacion de tenencia responsable de mascotas"
                 class="news-thumb"
               />
               <button
                 class="news-go-btn"
                 type="button"
-                data-news-url="https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2026/02/13/record-de-viajes-con-mascotas-en-aereopuesto-de-santiago-casi-10-mil-animales-arribaron-en-2025.shtml"
+                data-news-url="https://www.latercera.com/nacional/noticia/gobierno-anuncia-refuerzo-en-fiscalizacion-de-ley-de-tenencia-responsable-de-mascotas/"
               >
                 Ver noticia
               </button>
               <div class="news-content">
-                <span class="news-meta">Tendencias</span>
-                <h3>Como preparar a tu mascota para viajes largos y traslados</h3>
+                <span class="news-meta">La Tercera</span>
+                <h3>Gobierno anuncia refuerzo en fiscalizacion de ley de tenencia responsable de mascotas</h3>
                 <p>
-                  Recomendaciones practicas para viajar de forma segura con perros y gatos.
+                  Autoridades reforzaran los controles y el cumplimiento de la normativa en distintas comunas.
                 </p>
               </div>
             </article>
@@ -176,30 +175,61 @@
           </header>
 
           <form class="adoption-form" data-adoption-form>
+            <input
+              type="text"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+              class="bot-trap-field"
+              aria-hidden="true"
+            />
             <label for="request_type">Tipo de solicitud</label>
             <select id="request_type" name="request_type" required>
               <option value="">Selecciona una opcion</option>
               <option value="busco_adoptar">Busco adoptar una mascota</option>
               <option value="quiero_dar_en_adopcion">Quiero encontrar familia para una mascota</option>
             </select>
+            <small>Elige la opcion que mejor describa tu caso.</small>
 
             <label for="full_name">Nombre completo</label>
-            <input id="full_name" name="full_name" type="text" required />
+            <input id="full_name" name="full_name" type="text" placeholder="Ej: Josefa Ogalde" required />
 
-            <label for="adoption_email">Correo electronico</label>
-            <input id="adoption_email" name="email" type="email" required />
+            <div class="adoption-form-row">
+              <div>
+                <label for="adoption_email">Correo electronico</label>
+                <input
+                  id="adoption_email"
+                  name="email"
+                  type="email"
+                  placeholder="tu-correo@ejemplo.com"
+                  required
+                />
+              </div>
+              <div>
+                <label for="phone">Telefono</label>
+                <input id="phone" name="phone" type="text" placeholder="+56 9 1234 5678" />
+              </div>
+            </div>
 
-            <label for="phone">Telefono</label>
-            <input id="phone" name="phone" type="text" />
-
-            <label for="city">Ciudad</label>
-            <input id="city" name="city" type="text" />
-
-            <label for="pet_type">Tipo de mascota</label>
-            <input id="pet_type" name="pet_type" type="text" placeholder="Perro, gato, otra" />
+            <div class="adoption-form-row">
+              <div>
+                <label for="city">Ciudad</label>
+                <input id="city" name="city" type="text" placeholder="Ej: Santiago" />
+              </div>
+              <div>
+                <label for="pet_type">Tipo de mascota</label>
+                <input id="pet_type" name="pet_type" type="text" placeholder="Perro, gato, otra" />
+              </div>
+            </div>
 
             <label for="details">Descripcion</label>
-            <textarea id="details" name="details" rows="4" required></textarea>
+            <textarea
+              id="details"
+              name="details"
+              rows="4"
+              placeholder="Cuéntanos más detalles para ayudarte mejor."
+              required
+            ></textarea>
 
             <button type="submit" class="btn btn-fill">Enviar formulario</button>
             <p class="newsletter-form__message" data-adoption-message></p>
@@ -218,6 +248,14 @@
         <p>Recibe novedades y consejos para cuidar a tus regalones.</p>
 
         <form class="newsletter-form" data-newsletter-form>
+          <input
+            type="text"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+            class="bot-trap-field"
+            aria-hidden="true"
+          />
           <label for="newsletter-email">Correo electronico</label>
           <input
             id="newsletter-email"
