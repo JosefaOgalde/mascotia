@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <g fill="none" stroke="#cfd4da" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="13.5" cy="24.5" rx="6.5" ry="8.2" />
+    <ellipse cx="25.5" cy="14.5" rx="6.5" ry="8.2" />
+    <ellipse cx="44.5" cy="16.5" rx="6.5" ry="8.2" />
+    <ellipse cx="54" cy="28" rx="6.2" ry="8" />
+    <path d="M32 29 C24 29,18 35,15 40 C12 45,9 48,9 52 C9 58,15 60,21 58 C26 56,30 55,32 55 C34 55,38 56,43 58 C49 60,55 58,55 52 C55 48,52 45,49 40 C46 35,40 29,32 29 Z" />
+  </g>
+</svg>
