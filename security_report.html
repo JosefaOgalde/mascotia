@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporte de Seguridad - Mascotia.app</title>
+    <style>
+      :root {
+        --bg: #f7f9fb;
+        --card: #ffffff;
+        --text: #22313f;
+        --muted: #5b6b79;
+        --ok: #1f9d62;
+        --warn: #d08a00;
+        --risk: #c0392b;
+        --line: #dfe7ee;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .container {
+        width: min(980px, calc(100% - 32px));
+        margin: 24px auto;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 14px;
+      }
+      h1, h2 {
+        margin: 0 0 10px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+      }
+      p {
+        margin: 8px 0;
+        color: var(--muted);
+      }
+      ul {
+        margin: 8px 0 0 18px;
+        padding: 0;
+      }
+      li {
+        margin: 6px 0;
+      }
+      .badge {
+        display: inline-block;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.82rem;
+      }
+      .ok { background: #e9f9f0; color: var(--ok); }
+      .warn { background: #fff7e5; color: var(--warn); }
+      .risk { background: #fdecea; color: var(--risk); }
+      code {
+        background: #eef3f7;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      .footer {
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <h1>Reporte de Seguridad y Navegacion</h1>
+        <p>Proyecto: Mascotia.app</p>
+        <p>Estado actual del hardening: <span class="badge ok">Aplicado (fase 1)</span></p>
+      </section>
+
+      <section class="card">
+        <h2>Controles ya implementados</h2>
+        <ul>
+          <li><span class="badge ok">OK</span> CSRF activado en endpoints publicos de newsletter y formulario.</li>
+          <li><span class="badge ok">OK</span> Rate limiting en login de backoffice por IP y por usuario.</li>
+          <li><span class="badge ok">OK</span> IP real endurecida: <code>X-Forwarded-For</code> solo si el proxy esta confiado.</li>
+          <li><span class="badge ok">OK</span> <code>DEBUG=False</code> por defecto.</li>
+          <li><span class="badge ok">OK</span> Politica de secretos configurable (<code>DJANGO_DOTENV_OVERRIDE</code> y <code>DJANGO_DOTENV_FORCE_KEYS</code>).</li>
+          <li><span class="badge ok">OK</span> Mejora de navegacion: logo ahora redirige al inicio <code>/</code>.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Estado de navegacion (UX)</h2>
+        <ul>
+          <li><span class="badge ok">OK</span> Modal de confirmacion al suscribirse.</li>
+          <li><span class="badge ok">OK</span> Modal de cuenta ya registrada para newsletter.</li>
+          <li><span class="badge ok">OK</span> Modal de formulario enviado.</li>
+          <li><span class="badge ok">OK</span> Backoffice con botones de descarga CSV mas visibles.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Mejoras recomendadas (siguientes iteraciones)</h2>
+        <ul>
+          <li><span class="badge warn">Media</span> Agregar bloqueo progresivo y/o captcha tras multiples intentos fallidos en login.</li>
+          <li><span class="badge warn">Media</span> Añadir auditoria de eventos (login, descargas CSV, errores 429) en logs centralizados.</li>
+          <li><span class="badge warn">Media</span> Endurecer cabeceras HTTP via middleware (CSP, Permissions-Policy, Referrer-Policy explicita).</li>
+          <li><span class="badge warn">Media</span> Validar extension y tamano maximo de campos para prevenir payloads excesivos.</li>
+          <li><span class="badge risk">Alta</span> Rotar credenciales expuestas en conversaciones anteriores (SSH/admin), si aplica.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Operacion en cPanel</h2>
+        <p><strong>Si, debes refrescar/reiniciar en cPanel cuando hay cambios de codigo.</strong></p>
+        <p>Checklist minimo de despliegue:</p>
+        <ul>
+          <li><code>git pull</code></li>
+          <li><code>source ~/virtualenv/mascotia_django/3.10/bin/activate</code></li>
+          <li><code>python cpanel_collectstatic.py</code> (si hay cambios en estaticos)</li>
+          <li><code>touch ~/public_html/tmp/restart.txt</code> (reinicio Passenger)</li>
+        </ul>
+      </section>
+
+      <section class="card footer">
+        <p>Este reporte es un snapshot tecnico. Se recomienda revisarlo en cada release.</p>
+      </section>
+    </main>
+  </body>
+</html>
