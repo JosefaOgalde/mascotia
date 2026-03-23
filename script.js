@@ -16,7 +16,12 @@ const FOOTER_TEMPLATE = `
       <div class="footer-col">
         <h5>Contacto</h5>
         <a href="mailto:josefa@mascotia.app" class="footer-contact-link">
-          <i class="fa-regular fa-envelope"></i>
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13Zm2.1-.5L12 10.8 19.9 5H4.1Zm15.9 2.1-7.4 5.4a1 1 0 0 1-1.2 0L4 7.1v11.4a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5V7.1Z"
+            />
+          </svg>
           josefa@mascotia.app
         </a>
         <a
@@ -25,7 +30,12 @@ const FOOTER_TEMPLATE = `
           rel="noopener noreferrer"
           class="footer-contact-link"
         >
-          <i class="fa-brands fa-instagram"></i>
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.25 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+            />
+          </svg>
           @mascotia.app
         </a>
       </div>
@@ -322,6 +332,25 @@ function getCookie(name) {
   return cookieParts.pop().split(";").shift();
 }
 
+async function ensureCsrfToken() {
+  const existingToken = getCookie("csrftoken");
+  if (existingToken) {
+    return existingToken;
+  }
+
+  try {
+    await fetch("/api/csrf/", {
+      method: "GET",
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+  } catch (_error) {
+    // The POST handler will show a friendly fallback message.
+  }
+
+  return getCookie("csrftoken");
+}
+
 async function parseJsonResponse(response) {
   const rawText = await response.text();
   if (!rawText) {
@@ -480,14 +509,19 @@ function setupNewsletterModal() {
     const website = String(formData.get("website") || "").trim();
 
     if (!email) {
-      setMessage("Ingresa un correo valido.", false);
+      setMessage("Ingresa un correo válido.", false);
       return;
     }
 
-    setMessage("Procesando suscripcion...", true);
+    setMessage("Procesando suscripción...", true);
 
     try {
-      const csrfToken = getCookie("csrftoken");
+      const csrfToken = await ensureCsrfToken();
+      if (!csrfToken) {
+        setMessage("No pudimos validar tu sesión. Recarga la página e intenta nuevamente.", false);
+        return;
+      }
+
       const response = await fetch("/api/newsletter/subscribe/", {
         method: "POST",
         headers: {
@@ -508,8 +542,8 @@ function setupNewsletterModal() {
         }
 
         const fallbackMessage = response.status === 404
-          ? "El servicio de suscripcion no esta disponible en este momento."
-          : "No fue posible completar la suscripcion.";
+          ? "El servicio de suscripción no está disponible en este momento."
+          : "No fue posible completar la suscripción.";
         setMessage(data.message || fallbackMessage, false);
         return;
       }
@@ -520,7 +554,7 @@ function setupNewsletterModal() {
       window.scrollTo({ top: 0, behavior: "smooth" });
       form.reset();
     } catch (_error) {
-      setMessage("Error de conexion. Intenta nuevamente.", false);
+      setMessage("Error de conexión. Intenta nuevamente.", false);
     }
   });
 }
@@ -560,7 +594,12 @@ function setupAdoptionForm() {
     setMessage("Enviando formulario...", true);
 
     try {
-      const csrfToken = getCookie("csrftoken");
+      const csrfToken = await ensureCsrfToken();
+      if (!csrfToken) {
+        setMessage("No pudimos validar tu sesión. Recarga la página e intenta nuevamente.", false);
+        return;
+      }
+
       const response = await fetch("/api/adoption/submit/", {
         method: "POST",
         headers: {
@@ -584,7 +623,7 @@ function setupAdoptionForm() {
       showSuccessToast("El formulario quedó registrado, pronto te contactarán.");
       form.reset();
     } catch (_error) {
-      setMessage("Error de conexion. Intenta nuevamente.", false);
+      setMessage("Error de conexión. Intenta nuevamente.", false);
     }
   });
 }

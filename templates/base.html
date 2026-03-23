@@ -19,7 +19,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="stylesheet" href="/static/styles.css?v=7" />
   </head>
   <body>
     <div data-global-navbar></div>
@@ -55,7 +55,7 @@
       <section class="quick-access">
         <div class="container">
           <header class="section-heading">
-            <h2 class="quick-access-title">Ellos buscan ser adoptados</h2>
+            <h2 class="quick-access-title">Ellos buscan ser <span>adoptados</span></h2>
             <p>
               Conoce mascotas que buscan familia.<br />
               Haz click en cada tarjeta para ver la publicación completa.
@@ -68,8 +68,11 @@
       <section class="features news-section">
         <div class="container">
           <header class="section-heading">
-            <h2 class="notipets-title">Notipets</h2>
-            <p class="notipets-subtitle">Información actualizada sobre bienestar animal y tenencia responsable.</p>
+            <h2 class="notipets-title">NOTIPETS</h2>
+            <p class="notipets-subtitle">
+              <span>Información actualizada sobre</span>
+              <span>bienestar animal y tenencia responsable.</span>
+            </p>
           </header>
 
           <div class="news-grid-three">
@@ -82,7 +85,7 @@
               />
               <div class="news-content">
                 <span class="news-meta">BioBioChile</span>
-                <h3>Record de viajes con mascotas en aeropuerto de Santiago</h3>
+                <h3>Récord de viajes con mascotas en aeropuerto de Santiago</h3>
                 <p>
                   Casi 10 mil animales arribaron durante 2025 junto a sus tutores.
                 </p>
@@ -130,7 +133,7 @@
                 <span class="news-meta">24 Horas</span>
                 <h3>El doloroso mensaje de Edo Caroe tras la doble pérdida de sus mascotas</h3>
                 <p>
-                  El humorista compartio una emotiva despedida y su experiencia de duelo familiar.
+                  El humorista compartió una emotiva despedida y su experiencia de duelo familiar.
                 </p>
                 <button
                   class="news-go-btn"
@@ -148,21 +151,21 @@
       <section class="features blog-section">
         <div class="container">
           <header class="section-heading">
-            <h2>Blog Mascotia</h2>
-            <p>Guias cortas para ayudarte en el dia a dia con tus mascotas.</p>
+            <h2><span>Blog</span> Mascotia</h2>
+            <p>Guías cortas para ayudarte en el día a día con tus mascotas.</p>
           </header>
 
           <div class="blog-mini-grid">
             <article class="blog-mini-card">
               <img
                 class="blog-mini-thumb"
-                src="https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=1000&q=80"
-                alt="Gato en control veterinario"
+                src="https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=1000&q=80"
+                alt="Gato pequeño siamés"
                 loading="lazy"
               />
-              <h3>Vacunas al dia</h3>
-              <p>Calendario basico de vacunas para perros y gatos.</p>
-              <button type="button" class="btn btn-outline blog-more-btn">Ver mas</button>
+              <h3>Vacunas al día</h3>
+              <p>Calendario básico de vacunas para perros y gatos.</p>
+              <button type="button" class="btn blog-more-btn">Ver más</button>
             </article>
             <article class="blog-mini-card">
               <img
@@ -171,9 +174,9 @@
                 alt="Gato alimentándose"
                 loading="lazy"
               />
-              <h3>Alimentacion saludable</h3>
-              <p>Como elegir alimentos segun edad y nivel de actividad.</p>
-              <button type="button" class="btn btn-outline blog-more-btn">Ver mas</button>
+              <h3>Alimentación saludable</h3>
+              <p>Cómo elegir alimentos según edad y nivel de actividad.</p>
+              <button type="button" class="btn blog-more-btn">Ver más</button>
             </article>
             <article class="blog-mini-card">
               <img
@@ -184,7 +187,7 @@
               />
               <h3>Primeros cuidados</h3>
               <p>Checklist esencial para recibir una mascota en casa.</p>
-              <button type="button" class="btn btn-outline blog-more-btn">Ver mas</button>
+              <button type="button" class="btn blog-more-btn">Ver más</button>
             </article>
           </div>
         </div>
@@ -193,7 +196,7 @@
       <section class="adoption-form-section">
         <div class="container">
           <header class="section-heading">
-            <h2>Formulario de adopción</h2>
+            <h2>Formulario de <span class="adopcion-highlight">adopción</span></h2>
             <p>
               Completa este formulario si buscas adoptar una mascota<br />
               o si necesitas encontrar una familia para una mascota.
@@ -233,7 +236,7 @@
                 />
               </div>
               <div>
-                <label for="phone">Telefono</label>
+                <label for="phone">Teléfono</label>
                 <input id="phone" name="phone" type="text" placeholder="+56 9 1234 5678" />
               </div>
             </div>
@@ -245,7 +248,12 @@
               </div>
               <div>
                 <label for="pet_type">Tipo de mascota</label>
-                <input id="pet_type" name="pet_type" type="text" placeholder="Perro, gato, otra" />
+                <select id="pet_type" name="pet_type">
+                  <option value="">Selecciona una opción</option>
+                  <option value="perro">Perro</option>
+                  <option value="gato">Gato</option>
+                  <option value="otra">Otra</option>
+                </select>
               </div>
             </div>
 
@@ -298,6 +306,6 @@
     </div>
 
     <div data-global-footer></div>
-    <script src="/static/script.js"></script>
+    <script src="/static/script.js?v=7"></script>
   </body>
 </html>

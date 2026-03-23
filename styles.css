@@ -307,6 +307,10 @@ a {
 }
 
 .quick-access-title {
+  color: var(--text);
+}
+
+.quick-access-title span {
   color: var(--brand);
 }
 
@@ -316,13 +320,22 @@ a {
 
 .notipets-subtitle {
   font-weight: 800;
+  line-height: 1.4;
+}
+
+.notipets-subtitle span {
+  display: block;
+}
+
+.notipets-subtitle span:last-child {
+  color: var(--brand);
 }
 
 .news-grid-three {
   margin-top: 44px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 20px;
 }
 
 .news-card {
@@ -348,7 +361,8 @@ a {
 
 .news-thumb {
   width: 100%;
-  height: 170px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   object-fit: cover;
   display: block;
 }
@@ -381,7 +395,7 @@ a {
   margin-top: 34px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .blog-mini-card {
@@ -397,7 +411,8 @@ a {
 
 .blog-mini-thumb {
   width: 100%;
-  height: 126px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   object-fit: cover;
   object-position: center center;
   border-radius: 10px;
@@ -419,6 +434,17 @@ a {
   padding: 8px 14px;
   font-size: 0.86rem;
   margin-top: auto;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+}
+
+.blog-more-btn:hover {
+  background: var(--brand-dark);
+}
+
+.adopcion-highlight {
+  color: var(--brand);
 }
 
 .blog-card {
@@ -594,6 +620,14 @@ a {
 
 .footer-contact-link i {
   color: var(--brand);
+  font-size: 1.05rem;
+}
+
+.footer-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--brand);
+  flex: 0 0 auto;
 }
 
 .footer-bottom {
@@ -865,7 +899,8 @@ a {
   }
 
   .news-thumb {
-    height: 128px;
+    aspect-ratio: 1 / 1;
+    height: auto;
   }
 
   .news-content h3 {

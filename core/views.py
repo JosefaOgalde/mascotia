@@ -194,6 +194,11 @@ def home(request):
     return render(request, "base.html")
 
 
+@ensure_csrf_cookie
+def csrf_bootstrap(request):
+    return JsonResponse({"ok": True})
+
+
 @require_POST
 def subscribe_newsletter(request):
     email = ""
@@ -233,7 +238,7 @@ def subscribe_newsletter(request):
 
     if is_rate_limited(f"newsletter:email:{email}", limit=3, window_seconds=3600):
         return JsonResponse(
-            {"ok": False, "message": "Demasiados intentos para este correo. Intenta mas tarde."},
+            {"ok": False, "message": "Demasiados intentos para este correo. Intenta más tarde."},
             status=429,
         )
 
@@ -244,7 +249,7 @@ def subscribe_newsletter(request):
             {
                 "ok": False,
                 "already_exists": True,
-                "message": "Este correo ya esta registrado y no puede volver a suscribirse.",
+                "message": "Este correo ya está registrado y no puede volver a suscribirse.",
             },
             status=409,
         )
@@ -353,12 +358,7 @@ def submit_adoption_form(request):
             fail_silently=False,
         )
     except Exception:
-        return JsonResponse(
-            {
-                "ok": False,
-                "message": "La solicitud se guardo, pero no se pudo enviar el correo.",
-            },
-            status=500,
-        )
+        # El formulario ya quedó guardado en DB y CSV; no bloqueamos al usuario por falla de correo.
+        pass
 
     return JsonResponse({"ok": True, "message": "Formulario enviado correctamente."})

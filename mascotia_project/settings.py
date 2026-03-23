@@ -163,7 +163,12 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+configured_static_root = os.getenv("DJANGO_STATIC_ROOT", "").strip()
+if configured_static_root:
+    STATIC_ROOT = Path(configured_static_root).expanduser()
+else:
+    # Keep collectstatic output outside BASE_DIR to avoid recursive copies.
+    STATIC_ROOT = BASE_DIR.parent / "staticfiles"
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
 EMAIL_HOST = os.getenv("EMAIL_HOST", "")
