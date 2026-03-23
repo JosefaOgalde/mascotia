@@ -217,12 +217,12 @@ def subscribe_newsletter(request):
         return JsonResponse({"ok": True, "message": "Solicitud recibida."})
 
     if not email:
-        return JsonResponse({"ok": False, "message": "Ingresa un correo valido."}, status=400)
+        return JsonResponse({"ok": False, "message": "Ingresa un correo válido."}, status=400)
 
     try:
         validate_email(email)
     except ValidationError:
-        return JsonResponse({"ok": False, "message": "Ingresa un correo valido."}, status=400)
+        return JsonResponse({"ok": False, "message": "Ingresa un correo válido."}, status=400)
 
     client_ip = get_client_ip(request)
     if is_rate_limited(f"newsletter:ip:{client_ip}", limit=8, window_seconds=600):
@@ -255,7 +255,7 @@ def subscribe_newsletter(request):
     except Exception:
         pass
 
-    return JsonResponse({"ok": True, "message": "Suscripcion realizada con exito."})
+    return JsonResponse({"ok": True, "message": "Suscripción realizada con éxito."})
 
 
 @require_POST
@@ -283,9 +283,9 @@ def submit_adoption_form(request):
     details = str(payload.get("details", "")).strip()
 
     client_ip = get_client_ip(request)
-    if is_rate_limited(f"adoption:ip:{client_ip}", limit=6, window_seconds=900):
+    if is_rate_limited(f"adoption:ip:{client_ip}", limit=30, window_seconds=900):
         return JsonResponse(
-            {"ok": False, "message": "Demasiados envios desde tu red. Intenta en unos minutos."},
+            {"ok": False, "message": "Demasiados envíos desde tu red. Intenta en unos minutos."},
             status=429,
         )
 
@@ -293,15 +293,15 @@ def submit_adoption_form(request):
         return JsonResponse({"ok": False, "message": "Selecciona el tipo de solicitud."}, status=400)
 
     if not full_name or not email or not details:
-        return JsonResponse({"ok": False, "message": "Completa nombre, correo y descripcion."}, status=400)
+        return JsonResponse({"ok": False, "message": "Completa nombre, correo y descripción."}, status=400)
 
     try:
         validate_email(email)
     except ValidationError:
-        return JsonResponse({"ok": False, "message": "Ingresa un correo valido."}, status=400)
+        return JsonResponse({"ok": False, "message": "Ingresa un correo válido."}, status=400)
 
     if len(details) > 3000:
-        return JsonResponse({"ok": False, "message": "La descripcion es demasiado extensa."}, status=400)
+        return JsonResponse({"ok": False, "message": "La descripción es demasiado extensa."}, status=400)
 
     if request_type in {"busco_adoptar", "otro"}:
         AdoptionSeeker.objects.create(
@@ -330,7 +330,7 @@ def submit_adoption_form(request):
     except Exception:
         pass
 
-    subject = "Nueva solicitud de adopcion - Mascotia.app"
+    subject = "Nueva solicitud de adopción - Mascotia.app"
     message = (
         f"Tipo: {request_type}\n"
         f"Nombre: {full_name}\n"

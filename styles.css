@@ -91,7 +91,6 @@ a {
 
 .btn-fill:hover {
   background: var(--brand-dark);
-  transform: translateY(-1px);
 }
 
 .btn-outline {
@@ -195,7 +194,7 @@ a {
 
 .hero-arrow:hover {
   color: var(--brand-dark);
-  transform: translateY(-50%) scale(1.05);
+  transform: translateY(-50%);
 }
 
 .hero-arrow:focus,
@@ -307,6 +306,18 @@ a {
   max-width: 790px;
 }
 
+.quick-access-title {
+  color: var(--brand);
+}
+
+.notipets-title {
+  color: var(--brand);
+}
+
+.notipets-subtitle {
+  font-weight: 800;
+}
+
 .news-grid-three {
   margin-top: 44px;
   display: grid;
@@ -327,8 +338,7 @@ a {
 }
 
 .news-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(58, 71, 83, 0.14);
+  box-shadow: 0 8px 18px rgba(58, 71, 83, 0.12);
 }
 
 .news-card:focus-visible {
@@ -467,15 +477,38 @@ a {
 
 .quick-carousel {
   margin-top: 28px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.quick-carousel-track {
+  --scroll-distance: 0px;
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: quick-carousel-scroll 42s linear infinite;
+}
+
+.quick-carousel-set {
+  display: flex;
   gap: 18px;
+  flex: 0 0 auto;
+}
+
+@keyframes quick-carousel-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-1 * var(--scroll-distance)));
+  }
 }
 
 .quick-carousel-card {
   border-radius: 18px;
   overflow: hidden;
   min-height: 300px;
+  width: 210px;
+  flex: 0 0 210px;
   border: 1px solid var(--card-border);
   background: #fff;
   position: relative;
@@ -551,6 +584,16 @@ a {
 
 .footer-col a:hover {
   color: var(--brand-dark);
+}
+
+.footer-contact-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-contact-link i {
+  color: var(--brand);
 }
 
 .footer-bottom {
@@ -742,6 +785,28 @@ a {
   flex-wrap: wrap;
 }
 
+.site-toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 1700;
+  background: #1d9f67;
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 800;
+  box-shadow: 0 12px 24px rgba(29, 159, 103, 0.3);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.site-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .newsletter-form {
   display: grid;
   gap: 10px;
@@ -873,13 +938,14 @@ a {
     font-size: 1.45rem;
   }
 
-  .quick-carousel {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .quick-carousel-card,
   .quick-carousel-card img {
     min-height: 220px;
+  }
+
+  .quick-carousel-card {
+    width: 170px;
+    flex-basis: 170px;
   }
 
   .adoption-form {

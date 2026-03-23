@@ -15,7 +15,19 @@ const FOOTER_TEMPLATE = `
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
-        <p><i class="fa-regular fa-envelope"></i> josefa@mascotia.app</p>
+        <a href="mailto:josefa@mascotia.app" class="footer-contact-link">
+          <i class="fa-regular fa-envelope"></i>
+          josefa@mascotia.app
+        </a>
+        <a
+          href="https://www.instagram.com/mascotia.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-contact-link"
+        >
+          <i class="fa-brands fa-instagram"></i>
+          @mascotia.app
+        </a>
       </div>
     </div>
 
@@ -32,8 +44,6 @@ const HERO_BANNERS = [
 ];
 
 const HERO_ROTATION_MS = 5000;
-const QUICK_CAROUSEL_MS = 3500;
-const QUICK_VISIBLE_COUNT = 4;
 const QUICK_CAROUSEL_ITEMS = [
   {
     postUrl: "https://www.instagram.com/p/DWCfHwFFmx8/?img_index=1",
@@ -250,49 +260,55 @@ function setupQuickCarousel() {
     return;
   }
 
-  let current = 0;
+  const renderCards = (itemList) => itemList
+    .map(
+      (item, index) => `
+        <article class="quick-carousel-card">
+          <a
+            href="${item.postUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="quick-carousel-link"
+            aria-label="Abrir publicación de Instagram ${index + 1}"
+          >
+            <span class="quick-carousel-cta">¿Quieres adoptarme?</span>
+            <img
+              src="${item.imageUrl}"
+              alt="Mascota en adopción ${index + 1}"
+              loading="lazy"
+              onerror="if(this.dataset.fallbackTried){this.onerror=null;this.src='/assets/banner_principal_1.jpeg';}else{this.dataset.fallbackTried='1';this.src=this.src.replace('/assets/','/static/assets/');}"
+            />
+          </a>
+        </article>
+      `
+    )
+    .join("");
 
-  function getVisibleItems(start, count) {
-    return Array.from({ length: count }, (_, offset) => items[(start + offset) % items.length]);
-  }
+  carousel.innerHTML = `
+    <div class="quick-carousel-track">
+      <div class="quick-carousel-set">
+        ${renderCards(items)}
+      </div>
+      <div class="quick-carousel-set" aria-hidden="true">
+        ${renderCards(items)}
+      </div>
+    </div>
+  `;
 
-  function renderVisible() {
-    const visible = getVisibleItems(current, QUICK_VISIBLE_COUNT);
-    carousel.innerHTML = visible
-      .map(
-        (item, index) => `
-          <article class="quick-carousel-card">
-            <a
-              href="${item.postUrl}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="quick-carousel-link"
-              aria-label="Abrir publicacion de Instagram ${index + 1}"
-            >
-              <span class="quick-carousel-cta">¿Quieres adoptarme?</span>
-              <img
-                src="${item.imageUrl}"
-                alt="Mascota en adopcion ${index + 1}"
-                loading="lazy"
-                onerror="if(this.dataset.fallbackTried){this.onerror=null;this.src='/assets/banner_principal_1.jpeg';}else{this.dataset.fallbackTried='1';this.src=this.src.replace('/assets/','/static/assets/');}"
-              />
-            </a>
-          </article>
-        `
-      )
-      .join("");
-  }
+  const track = carousel.querySelector(".quick-carousel-track");
+  const firstSet = carousel.querySelector(".quick-carousel-set");
 
-  renderVisible();
-
-  if (items.length <= 1) {
+  if (!track || !firstSet) {
     return;
   }
 
-  window.setInterval(() => {
-    current = (current + 1) % items.length;
-    renderVisible();
-  }, QUICK_CAROUSEL_MS);
+  function updateScrollDistance() {
+    const setWidth = firstSet.getBoundingClientRect().width;
+    track.style.setProperty("--scroll-distance", `${setWidth}px`);
+  }
+
+  updateScrollDistance();
+  window.addEventListener("resize", updateScrollDistance);
 }
 
 setupQuickCarousel();
@@ -368,6 +384,29 @@ function setupFeedbackModal() {
 }
 
 const openFeedbackModal = setupFeedbackModal();
+
+function setupSuccessToast() {
+  const toast = document.createElement("div");
+  toast.className = "site-toast";
+  toast.setAttribute("aria-live", "polite");
+  toast.setAttribute("role", "status");
+  document.body.appendChild(toast);
+
+  let timeoutId = null;
+
+  return function showToast(text) {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+    toast.textContent = text;
+    toast.classList.add("is-visible");
+    timeoutId = window.setTimeout(() => {
+      toast.classList.remove("is-visible");
+    }, 4500);
+  };
+}
+
+const showSuccessToast = setupSuccessToast();
 
 function setupNewsletterModal() {
   const modal = document.querySelector("[data-newsletter-modal]");
@@ -514,7 +553,7 @@ function setupAdoptionForm() {
     }
 
     if (!["busco_adoptar", "quiero_dar_en_adopcion", "otro"].includes(payload.request_type)) {
-      setMessage("Selecciona una opcion valida.", false);
+      setMessage("Selecciona una opción válida.", false);
       return;
     }
 
@@ -535,14 +574,14 @@ function setupAdoptionForm() {
 
       if (!response.ok || !data.ok) {
         const fallbackMessage = response.status === 404
-          ? "El servicio del formulario no esta disponible en este momento."
+          ? "El servicio del formulario no está disponible en este momento."
           : "No fue posible enviar el formulario.";
         setMessage(data.message || fallbackMessage, false);
         return;
       }
 
       setMessage("", true);
-      openFeedbackModal("Ya se envio el formulario");
+      showSuccessToast("El formulario quedó registrado, pronto te contactarán.");
       form.reset();
     } catch (_error) {
       setMessage("Error de conexion. Intenta nuevamente.", false);
@@ -561,8 +600,8 @@ function setupNewsLinks() {
     <section class="news-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="news-modal-title">
       <h3 id="news-modal-title">¿Deseas visitar el sitio de la noticia?</h3>
       <div class="news-modal__actions">
-        <button type="button" class="btn btn-outline" data-news-modal-close>No, quedarme aqui</button>
-        <button type="button" class="btn btn-fill" data-news-modal-confirm>Si, visitar sitio</button>
+        <button type="button" class="btn btn-outline" data-news-modal-close>No, quedarme aquí</button>
+        <button type="button" class="btn btn-fill" data-news-modal-confirm>Sí, visitar sitio</button>
       </div>
     </section>
   `;
