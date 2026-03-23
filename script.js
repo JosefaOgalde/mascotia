@@ -1,7 +1,7 @@
 const NAVBAR_TEMPLATE = `
   <header class="topbar">
     <div class="container topbar-inner">
-      <a href="#" class="logo">mascotia.app</a>
+      <a href="/" class="logo">mascotia.app</a>
     </div>
   </header>
 `;
@@ -659,8 +659,3 @@ if (yearNode) {
   yearNode.textContent = new Date().getFullYear();
 }
 
-document.querySelectorAll('a[href="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-  });
-});

@@ -16,7 +16,6 @@ from django.shortcuts import render
 from django.conf import settings
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from .models import AdoptionSeeker, RehomeRequest, Subscriber
@@ -67,6 +66,20 @@ def backoffice_login(request):
     if request.method == "POST":
         username = str(request.POST.get("username", "")).strip()
         password = str(request.POST.get("password", ""))
+        client_ip = get_client_ip(request)
+
+        if is_rate_limited(f"backoffice_login:ip:{client_ip}", limit=12, window_seconds=900):
+            error_message = "Demasiados intentos de acceso. Intenta nuevamente en unos minutos."
+            return render(request, "backoffice/login.html", {"error_message": error_message}, status=429)
+
+        if username and is_rate_limited(
+            f"backoffice_login:user:{username.lower()}",
+            limit=8,
+            window_seconds=900,
+        ):
+            error_message = "La cuenta excedio el maximo de intentos. Intenta nuevamente en unos minutos."
+            return render(request, "backoffice/login.html", {"error_message": error_message}, status=429)
+
         user = authenticate(request, username=username, password=password)
 
         if user and user.is_active and user.is_staff:
@@ -182,7 +195,6 @@ def home(request):
 
 
 @require_POST
-@csrf_exempt
 def subscribe_newsletter(request):
     email = ""
 
@@ -247,7 +259,6 @@ def subscribe_newsletter(request):
 
 
 @require_POST
-@csrf_exempt
 def submit_adoption_form(request):
     payload = {}
 

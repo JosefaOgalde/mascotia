@@ -22,21 +22,31 @@ def env_int(name, default=0):
         return default
 
 
-def load_dotenv_file(dotenv_path):
+def load_dotenv_file(dotenv_path, override=False, force_keys=None):
     if not dotenv_path.exists():
         return
+
+    force_keys = force_keys or set()
 
     for line in dotenv_path.read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
         if not stripped or stripped.startswith("#") or "=" not in stripped:
             continue
         key, value = stripped.split("=", 1)
-        # Prioriza los valores del .env para evitar conflictos
-        # con variables inyectadas por el hosting (ej. MYSQL_USER=MySQL).
-        os.environ[key.strip()] = value.strip()
+        normalized_key = key.strip()
+        normalized_value = value.strip()
+
+        if override or normalized_key in force_keys or normalized_key not in os.environ:
+            os.environ[normalized_key] = normalized_value
 
 
-load_dotenv_file(BASE_DIR / ".env")
+dotenv_override = env_bool("DJANGO_DOTENV_OVERRIDE", False)
+dotenv_force_keys = {
+    key.strip()
+    for key in os.getenv("DJANGO_DOTENV_FORCE_KEYS", "").split(",")
+    if key.strip()
+}
+load_dotenv_file(BASE_DIR / ".env", override=dotenv_override, force_keys=dotenv_force_keys)
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,7 +56,7 @@ load_dotenv_file(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-key-change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env_bool("DJANGO_DEBUG", True)
+DEBUG = env_bool("DJANGO_DEBUG", False)
 
 ALLOWED_HOSTS = [host.strip() for host in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
 
@@ -191,4 +201,10 @@ CSRF_TRUSTED_ORIGINS = [
         "https://mascotia.app,https://www.mascotia.app",
     ).split(",")
     if origin.strip()
+]
+
+TRUSTED_PROXY_IPS = [
+    ip.strip()
+    for ip in os.getenv("DJANGO_TRUSTED_PROXY_IPS", "").split(",")
+    if ip.strip()
 ]
