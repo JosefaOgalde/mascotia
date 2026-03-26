@@ -11,3 +11,4 @@ staticfiles/
 .idea/
 .vscode/
 .cursor/
+cpanel_env_variables_backup.txt

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backoffice Newsletter | Mascotia</title>
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/static/assets/favicon-pawprint-light-v5.svg?v=6" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/static/assets/favicon-pawprint-light-v5.svg?v=6" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,6 +64,15 @@
       }
       .download-btn:hover {
         background: #ff9f1c;
+      }
+      .admin-link {
+        display: inline-block;
+        text-decoration: none;
+        background: #eef1f2;
+        color: #3a4753;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-weight: 800;
       }
       .download-actions {
         margin: 16px 0;
@@ -127,6 +138,7 @@
           <p class="summary">Total de correos registrados: {{ total_subscribers }}</p>
         </div>
         <div class="top-actions">
+          <a href="/admin/" class="admin-link">Ir a Django admin</a>
           <a href="/backoffice/download/newsletter/" class="download-btn">Descargar correos CSV</a>
           <a href="/backoffice/download/adoption/" class="download-btn">Descargar formularios CSV</a>
           <a href="/backoffice/logout/" class="logout">Cerrar sesión</a>

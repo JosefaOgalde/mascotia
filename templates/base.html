@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token }}" />
     <title>Mascotia.app</title>
-    <link rel="icon" type="image/svg+xml" sizes="any" href="/static/assets/favicon-pawprint-light-v5.svg?v=5" />
-    <link rel="shortcut icon" type="image/svg+xml" href="/static/assets/favicon-pawprint-light-v5.svg?v=5" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/static/assets/favicon-pawprint-light-v5.svg?v=6" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/static/assets/favicon-pawprint-light-v5.svg?v=6" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,7 +20,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/static/styles.css?v=7" />
+    <link rel="stylesheet" href="/static/styles.css?v=10" />
   </head>
   <body>
     <div data-global-navbar></div>
@@ -204,6 +205,7 @@
           </header>
 
           <form class="adoption-form" data-adoption-form>
+            {% csrf_token %}
             <input
               type="text"
               name="website"
@@ -283,6 +285,7 @@
         <p>Recibe novedades y consejos para cuidar a tus regalones.</p>
 
         <form class="newsletter-form" data-newsletter-form>
+          {% csrf_token %}
           <input
             type="text"
             name="website"
@@ -306,6 +309,6 @@
     </div>
 
     <div data-global-footer></div>
-    <script src="/static/script.js?v=7"></script>
+    <script src="/static/script.js?v=8"></script>
   </body>
 </html>

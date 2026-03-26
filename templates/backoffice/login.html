@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ingreso Backoffice | Mascotia</title>
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/static/assets/favicon-pawprint-light-v5.svg?v=6" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/static/assets/favicon-pawprint-light-v5.svg?v=6" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -49,6 +51,42 @@
         padding: 11px 12px;
         font-size: 1rem;
       }
+      .password-wrap {
+        position: relative;
+      }
+      .password-wrap input {
+        padding-right: 46px;
+      }
+      .password-toggle {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 34px;
+        height: 34px;
+        margin: 0;
+        border: none;
+        border-radius: 8px;
+        padding: 0;
+        background: transparent;
+        color: #5b6773;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .password-toggle:hover {
+        background: #edf2f4;
+      }
+      .password-toggle svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
       button {
         width: 100%;
         margin-top: 16px;
@@ -71,7 +109,7 @@
   <body>
     <section class="card">
       <h1>Backoffice Mascotia</h1>
-      <p>Ingresa con tu usuario administrador para ver correos suscritos.</p>
+      <p>Ingresa con tu usuario administrador (el mismo que funciona en /admin/) para ver correos suscritos.</p>
 
       <form method="post">
         {% csrf_token %}
@@ -79,7 +117,27 @@
         <input id="username" name="username" type="text" required />
 
         <label for="password">Contrasena</label>
-        <input id="password" name="password" type="password" required />
+        <div class="password-wrap">
+          <input id="password" name="password" type="password" required />
+          <button
+            type="button"
+            class="password-toggle"
+            data-password-toggle
+            aria-label="Mostrar contrasena"
+            title="Mostrar contrasena"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" data-eye-open>
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" data-eye-closed hidden>
+              <path d="M3 3l18 18" />
+              <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4" />
+              <path d="M9.5 5.3A11 11 0 0 1 12 5c6.5 0 10 7 10 7a18.8 18.8 0 0 1-3.1 4" />
+              <path d="M6.6 6.6A18.6 18.6 0 0 0 2 12s3.5 7 10 7c1.7 0 3.2-.4 4.5-1.1" />
+            </svg>
+          </button>
+        </div>
 
         <button type="submit">Ingresar</button>
       </form>
@@ -88,5 +146,24 @@
       <p class="error">{{ error_message }}</p>
       {% endif %}
     </section>
+    <script>
+      (function () {
+        const toggleButton = document.querySelector("[data-password-toggle]");
+        const passwordInput = document.getElementById("password");
+        if (!toggleButton || !passwordInput) {
+          return;
+        }
+        const eyeOpen = toggleButton.querySelector("[data-eye-open]");
+        const eyeClosed = toggleButton.querySelector("[data-eye-closed]");
+        toggleButton.addEventListener("click", function () {
+          const shouldShow = passwordInput.type === "password";
+          passwordInput.type = shouldShow ? "text" : "password";
+          toggleButton.setAttribute("aria-label", shouldShow ? "Ocultar contrasena" : "Mostrar contrasena");
+          toggleButton.setAttribute("title", shouldShow ? "Ocultar contrasena" : "Mostrar contrasena");
+          if (eyeOpen) eyeOpen.hidden = shouldShow;
+          if (eyeClosed) eyeClosed.hidden = !shouldShow;
+        });
+      })();
+    </script>
   </body>
   </html>

@@ -39,7 +39,20 @@ Configura en la app Python:
 ```bash
 python manage.py migrate
 python manage.py collectstatic --noinput
+python cpanel_create_admin.py
 ```
+
+El script `cpanel_create_admin.py` crea/actualiza un usuario administrador por defecto:
+
+- Usuario: `adminfix`
+- Contrasena: `Mascotia1234`
+
+Tambien puedes sobrescribirlos con variables de entorno:
+
+- `DJANGO_ADMIN_USERNAME`
+- `DJANGO_ADMIN_PASSWORD`
+- `DJANGO_ADMIN_EMAIL`
+- `DJANGO_SECOND_ADMIN_USERNAME` (opcional, para crear un segundo admin)
 
 ## 5) Reiniciar app
 
@@ -51,3 +64,5 @@ En `Setup Python App`, click en `Restart`.
 - Prueba:
   - modal newsletter (debe guardar en tabla `newsletter`)
   - formulario adopcion (debe guardar en tablas `adoption_seekers` o `rehome_requests`)
+  - login backoffice en `https://mascotia.app/backoffice/login/`
+  - panel admin Django en `https://mascotia.app/admin/`

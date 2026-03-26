@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.conf import settings
@@ -196,7 +197,7 @@ def home(request):
 
 @ensure_csrf_cookie
 def csrf_bootstrap(request):
-    return JsonResponse({"ok": True})
+    return JsonResponse({"ok": True, "csrfToken": get_token(request)})
 
 
 @require_POST

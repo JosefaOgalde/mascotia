@@ -13,6 +13,9 @@
   --muted: var(--gray-700);
   --bg-soft: var(--gray-100);
   --card-border: var(--gray-200);
+  --heading-line-height: 1.2;
+  --body-line-height: 1.35;
+  --text-letter-spacing: 0.01em;
 }
 
 * {
@@ -26,6 +29,29 @@ body {
   font-family: "Raleway", Arial, sans-serif;
   color: var(--text);
   background: #fff;
+  line-height: var(--body-line-height);
+  letter-spacing: var(--text-letter-spacing);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--heading-line-height);
+  letter-spacing: var(--text-letter-spacing);
+}
+
+p,
+button,
+input,
+textarea,
+select,
+label,
+small {
+  line-height: var(--body-line-height);
+  letter-spacing: var(--text-letter-spacing);
 }
 
 body.modal-open {
@@ -504,6 +530,7 @@ a {
 .quick-carousel {
   margin-top: 28px;
   overflow: hidden;
+  padding-inline: 18px;
 }
 
 .quick-carousel-track {

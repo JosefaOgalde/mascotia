@@ -332,23 +332,45 @@ function getCookie(name) {
   return cookieParts.pop().split(";").shift();
 }
 
+function getCsrfTokenFromDom() {
+  const metaToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+  if (metaToken) {
+    return metaToken;
+  }
+
+  const inputToken = document.querySelector("input[name='csrfmiddlewaretoken']")?.value;
+  return inputToken || "";
+}
+
 async function ensureCsrfToken() {
+  const domToken = getCsrfTokenFromDom();
+  if (domToken) {
+    return domToken;
+  }
+
   const existingToken = getCookie("csrftoken");
   if (existingToken) {
     return existingToken;
   }
 
   try {
-    await fetch("/api/csrf/", {
+    const response = await fetch("/api/csrf/", {
       method: "GET",
       cache: "no-store",
       credentials: "same-origin",
     });
+    if (!response.ok) {
+      return getCsrfTokenFromDom() || getCookie("csrftoken");
+    }
+    const data = await parseJsonResponse(response);
+    if (data.csrfToken) {
+      return data.csrfToken;
+    }
   } catch (_error) {
     // The POST handler will show a friendly fallback message.
   }
 
-  return getCookie("csrftoken");
+  return getCsrfTokenFromDom() || getCookie("csrftoken");
 }
 
 async function parseJsonResponse(response) {
@@ -524,6 +546,7 @@ function setupNewsletterModal() {
 
       const response = await fetch("/api/newsletter/subscribe/", {
         method: "POST",
+        credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrfToken,
@@ -602,6 +625,7 @@ function setupAdoptionForm() {
 
       const response = await fetch("/api/adoption/submit/", {
         method: "POST",
+        credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrfToken,
