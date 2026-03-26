@@ -314,7 +314,11 @@ function setupQuickCarousel() {
 
   function updateScrollDistance() {
     const setWidth = firstSet.getBoundingClientRect().width;
-    track.style.setProperty("--scroll-distance", `${setWidth}px`);
+    const trackStyles = window.getComputedStyle(track);
+    const rawGap = trackStyles.columnGap || trackStyles.gap || "0";
+    const parsedGap = Number.parseFloat(rawGap);
+    const trackGap = Number.isFinite(parsedGap) ? parsedGap : 0;
+    track.style.setProperty("--scroll-distance", `${setWidth + trackGap}px`);
   }
 
   updateScrollDistance();
