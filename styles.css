@@ -297,17 +297,6 @@ a {
   margin-inline: auto;
 }
 
-.hero-cta {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.hero-cta .btn {
-  min-width: 290px;
-}
-
 .features {
   margin-top: 28px;
   background: var(--bg-soft);
@@ -325,7 +314,7 @@ a {
 }
 
 .section-heading h2 {
-  font-size: 2.95rem;
+  font-size: 32px;
   margin: 0;
   font-weight: 900;
   line-height: 1.17;
@@ -666,52 +655,7 @@ a {
   flex-wrap: wrap;
 }
 
-.newsletter-modal-form {
-  margin-top: 12px;
-  display: grid;
-  gap: 10px;
-  text-align: left;
-}
-
-.newsletter-modal-form label {
-  font-weight: 700;
-}
-
-.newsletter-modal-form input {
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  padding: 11px 12px;
-  font-size: 1rem;
-  font-family: "Raleway", Arial, sans-serif;
-  color: var(--text);
-  background: #fff;
-}
-
-.newsletter-modal-form input:focus {
-  outline: 2px solid #b4edf2;
-  border-color: var(--brand);
-}
-
-.newsletter-modal-message {
-  min-height: 1.4em;
-  margin: 0;
-  font-weight: 700;
-  color: #b93a3a;
-}
-
-.newsletter-modal-message.is-success {
-  color: #178b5a;
-}
-
-.newsletter-modal-message.is-error {
-  color: #b93a3a;
-}
-
 @media (max-width: 1024px) {
-  .section-heading h2 {
-    font-size: 2.4rem;
-  }
-
   .news-grid-three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -768,10 +712,6 @@ a {
     font-size: 1rem;
   }
 
-  .section-heading h2 {
-    font-size: 1.9rem;
-  }
-
   .news-grid-three,
   .footer-main {
     grid-template-columns: 1fr;
@@ -780,11 +720,6 @@ a {
   .footer-bottom {
     flex-direction: column;
     text-align: center;
-  }
-
-  .hero-cta .btn {
-    min-width: unset;
-    width: 100%;
   }
 
   .quick-carousel-card,
