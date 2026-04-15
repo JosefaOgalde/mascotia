@@ -173,8 +173,16 @@ function setupHeroCarousel() {
   const transitionMs = 800;
   let autoplayTimer = null;
   let indicatorDots = [];
+  let isTransitioning = false;
 
   function moveToCurrent(animate) {
+    const maxIndex = extendedBanners.length - 1;
+    if (currentIndex < 0) {
+      currentIndex = 0;
+    } else if (currentIndex > maxIndex) {
+      currentIndex = maxIndex;
+    }
+    isTransitioning = animate;
     track.style.transition = animate ? `transform ${transitionMs}ms ease` : "none";
     track.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateIndicators();
@@ -227,31 +235,44 @@ function setupHeroCarousel() {
   createIndicators();
   moveToCurrent(false);
 
-  track.addEventListener("transitionend", () => {
-    if (currentIndex === extendedBanners.length - 1) {
+  function normalizeAfterTransition() {
+    isTransitioning = false;
+    if (currentIndex >= extendedBanners.length - 1) {
       currentIndex = 1;
       moveToCurrent(false);
-    } else if (currentIndex === 0) {
+    } else if (currentIndex <= 0) {
       currentIndex = extendedBanners.length - 2;
       moveToCurrent(false);
     }
-  });
+  }
+
+  track.addEventListener("transitionend", normalizeAfterTransition);
+  track.addEventListener("transitioncancel", normalizeAfterTransition);
 
   function moveNext() {
+    if (isTransitioning) {
+      return;
+    }
     currentIndex += 1;
     moveToCurrent(true);
   }
 
   function movePrev() {
+    if (isTransitioning) {
+      return;
+    }
     currentIndex -= 1;
     moveToCurrent(true);
   }
 
   function restartAutoplay() {
     if (autoplayTimer) {
-      window.clearInterval(autoplayTimer);
+      window.clearTimeout(autoplayTimer);
     }
-    autoplayTimer = window.setInterval(moveNext, HERO_ROTATION_MS);
+    autoplayTimer = window.setTimeout(() => {
+      moveNext();
+      restartAutoplay();
+    }, HERO_ROTATION_MS);
   }
 
   if (nextButton) {
