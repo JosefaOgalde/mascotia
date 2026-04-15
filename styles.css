@@ -217,9 +217,14 @@ a {
 
 .hero-arrow-next::before {
   content: "›";
+  color: #d7f3fb;
 }
 
 .hero-arrow-prev:hover::before {
+  color: #c7eaf5;
+}
+
+.hero-arrow-next:hover::before {
   color: #c7eaf5;
 }
 
