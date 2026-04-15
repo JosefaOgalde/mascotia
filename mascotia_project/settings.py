@@ -61,9 +61,11 @@ DEBUG = env_bool("DJANGO_DEBUG", False)
 ALLOWED_HOSTS = [host.strip() for host in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
 
 if not DEBUG:
+    required_hosts = ["mascotia.app", "www.mascotia.app", "localhost", "127.0.0.1"]
     filtered_hosts = [host for host in ALLOWED_HOSTS if host != "*"]
-    if not filtered_hosts:
-        filtered_hosts = ["mascotia.app", "www.mascotia.app"]
+    for required_host in required_hosts:
+        if required_host not in filtered_hosts:
+            filtered_hosts.append(required_host)
     ALLOWED_HOSTS = filtered_hosts
 
 
@@ -207,6 +209,12 @@ CSRF_TRUSTED_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
+
+if not DEBUG:
+    required_csrf_origins = ["https://mascotia.app", "https://www.mascotia.app"]
+    for required_origin in required_csrf_origins:
+        if required_origin not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(required_origin)
 
 TRUSTED_PROXY_IPS = [
     ip.strip()
