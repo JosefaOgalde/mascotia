@@ -375,12 +375,25 @@ function getCookie(name) {
 
 function getCsrfTokenFromDom() {
   const metaToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
-  if (metaToken) {
-    return metaToken;
+  const normalizedMeta = String(metaToken || "").trim();
+  if (
+    normalizedMeta &&
+    normalizedMeta !== "NOTPROVIDED" &&
+    normalizedMeta !== "csrf_token"
+  ) {
+    return normalizedMeta;
   }
 
   const inputToken = document.querySelector("input[name='csrfmiddlewaretoken']")?.value;
-  return inputToken || "";
+  const normalizedInput = String(inputToken || "").trim();
+  if (
+    normalizedInput &&
+    normalizedInput !== "NOTPROVIDED" &&
+    normalizedInput !== "csrf_token"
+  ) {
+    return normalizedInput;
+  }
+  return "";
 }
 
 async function ensureCsrfToken() {
@@ -427,7 +440,7 @@ async function parseJsonResponse(response) {
 }
 
 function setupNewsletterSubscription() {
-  const openButton = document.querySelector("[data-open-newsletter-modal]");
+  const openButton = document.querySelector("[data-mascotia-subscribe]");
   if (!openButton) {
     return;
   }
