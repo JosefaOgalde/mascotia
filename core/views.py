@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.core.paginator import Paginator
 from django.db import IntegrityError
+from django.db.utils import OperationalError, ProgrammingError
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -249,6 +250,14 @@ def subscribe_newsletter(request):
     except IntegrityError:
         created = False
         subscriber = Subscriber.objects.filter(email=email).first()
+    except (OperationalError, ProgrammingError):
+        return JsonResponse(
+            {
+                "ok": False,
+                "message": "El servicio de suscripción está en mantenimiento. Intenta nuevamente en unos minutos.",
+            },
+            status=503,
+        )
 
     if not created:
         return JsonResponse(

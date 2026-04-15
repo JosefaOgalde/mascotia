@@ -585,14 +585,18 @@ function setupNewsletterModal() {
         return;
       }
 
+      const payload = new URLSearchParams();
+      payload.set("email", email);
+      payload.set("website", website);
+
       const response = await fetch("/api/newsletter/subscribe/", {
         method: "POST",
         credentials: "same-origin",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
           "X-CSRFToken": csrfToken,
         },
-        body: JSON.stringify({ email, website }),
+        body: payload.toString(),
       });
 
       const data = await parseJsonResponse(response);
