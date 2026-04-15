@@ -530,9 +530,19 @@ function setupNewsletterSubscription() {
 
       const data = await parseJsonResponse(response);
       if (!response.ok || !data.ok) {
-        const fallbackMessage = response.status === 409
-          ? "Este correo ya está suscrito."
-          : "No fue posible completar la suscripción.";
+        let fallbackMessage = "No fue posible completar la suscripción.";
+        if (response.status === 403) {
+          fallbackMessage =
+            "No se pudo validar la solicitud (CSRF). Recarga la página e intenta otra vez.";
+        } else if (response.status === 404) {
+          fallbackMessage = "El servicio de suscripción no está disponible en este momento.";
+        } else if (response.status === 429) {
+          fallbackMessage = "Demasiados intentos. Espera unos minutos e intenta de nuevo.";
+        } else if (response.status === 409) {
+          fallbackMessage = "Este correo ya está suscrito.";
+        } else if (response.status >= 500) {
+          fallbackMessage = "Error en el servidor. Intenta más tarde o avísanos si sigue fallando.";
+        }
         setMessage(data.message || fallbackMessage, false);
         return;
       }

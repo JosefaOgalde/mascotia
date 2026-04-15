@@ -223,6 +223,16 @@ if not DEBUG:
     for required_origin in required_csrf_origins:
         if required_origin not in CSRF_TRUSTED_ORIGINS:
             CSRF_TRUSTED_ORIGINS.append(required_origin)
+elif DEBUG:
+    # Permite POST/AJAX desde el servidor de desarrollo (Django 4+ comprueba Origin/Referer).
+    for origin in (
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+        "http://127.0.0.1",
+        "http://localhost",
+    ):
+        if origin not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(origin)
 
 TRUSTED_PROXY_IPS = [
     ip.strip()

@@ -16,6 +16,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
+from django.db import DatabaseError
 
 from .models import AdoptionSeeker, RehomeRequest, Subscriber
 from .security import get_client_ip, is_rate_limited
@@ -274,7 +275,17 @@ def subscribe_newsletter(request):
             status=429,
         )
 
-    subscriber, created = Subscriber.objects.get_or_create(email=email)
+    try:
+        _subscriber, created = Subscriber.objects.get_or_create(email=email)
+    except DatabaseError:
+        return JsonResponse(
+            {
+                "ok": False,
+                "message": "No pudimos guardar tu correo en este momento. Verifica que el sitio esté actualizado o intenta más tarde.",
+            },
+            status=503,
+        )
+
     if not created:
         return JsonResponse(
             {"ok": False, "already_registered": True, "message": "Este correo ya está suscrito."},
