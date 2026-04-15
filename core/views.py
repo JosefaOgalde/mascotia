@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.core.paginator import Paginator
+from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -243,7 +244,11 @@ def subscribe_newsletter(request):
             status=429,
         )
 
-    subscriber, created = Subscriber.objects.get_or_create(email=email)
+    try:
+        subscriber, created = Subscriber.objects.get_or_create(email=email)
+    except IntegrityError:
+        created = False
+        subscriber = Subscriber.objects.filter(email=email).first()
 
     if not created:
         return JsonResponse(
