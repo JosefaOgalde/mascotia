@@ -14,7 +14,8 @@ const FOOTER_TEMPLATE = `
         <p>Chile</p>
       </div>
       <div class="footer-col">
-        <h5>Contacto</h5>
+        <h5>contacto</h5>
+        <div class="footer-contact-lines">
         <a href="mailto:josefa@mascotia.app" class="footer-contact-link">
           <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
             <path
@@ -38,6 +39,7 @@ const FOOTER_TEMPLATE = `
           </svg>
           @mascotia.app
         </a>
+        </div>
       </div>
     </div>
 

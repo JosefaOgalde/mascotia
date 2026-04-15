@@ -13,8 +13,9 @@
   --muted: var(--gray-700);
   --bg-soft: var(--gray-100);
   --card-border: var(--gray-200);
-  --heading-line-height: 1.2;
-  --body-line-height: 1.35;
+  --line-height-text: 1.45;
+  --heading-line-height: var(--line-height-text);
+  --body-line-height: var(--line-height-text);
   --text-letter-spacing: 0.01em;
 }
 
@@ -85,7 +86,7 @@ a {
   font-weight: 900;
   color: var(--brand);
   letter-spacing: 0.2px;
-  line-height: 1.2;
+  line-height: var(--body-line-height);
 }
 
 .auth-buttons {
@@ -209,7 +210,7 @@ a {
   text-align: center;
   font-size: 3.1rem;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: var(--body-line-height);
   color: var(--brand);
 }
 
@@ -284,7 +285,7 @@ a {
   margin: 0;
   color: var(--brand);
   font-size: 2.85rem;
-  line-height: 1;
+  line-height: var(--body-line-height);
   font-weight: 900;
 }
 
@@ -317,7 +318,7 @@ a {
   font-size: 32px;
   margin: 0;
   font-weight: 900;
-  line-height: 1.17;
+  line-height: var(--body-line-height);
 }
 
 .section-heading h2 span {
@@ -345,7 +346,7 @@ a {
 
 .notipets-subtitle {
   font-weight: 800;
-  line-height: 1.4;
+  line-height: var(--body-line-height);
 }
 
 .notipets-subtitle span {
@@ -432,14 +433,14 @@ a {
 .news-content h3 {
   margin: 0 0 10px;
   font-size: 1.42rem;
-  line-height: 1.25;
+  line-height: var(--body-line-height);
   font-weight: 900;
 }
 
 .news-content p {
   margin: 0 0 18px;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: var(--body-line-height);
 }
 
 .quick-access {
@@ -519,7 +520,7 @@ a {
   color: #fff;
   font-weight: 800;
   font-size: 0.78rem;
-  line-height: 1;
+  line-height: var(--body-line-height);
   white-space: nowrap;
   padding: 7px 10px;
   border-radius: 999px;
@@ -550,14 +551,22 @@ a {
   margin: 0 0 12px;
   color: var(--brand);
   font-size: 1.2rem;
+  line-height: var(--body-line-height);
+}
+
+.footer-contact-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .footer-col p,
 .footer-col a {
   display: block;
-  margin: 0 0 8px;
+  margin: 0;
   color: #3f4d5a;
   font-weight: 600;
+  line-height: var(--body-line-height);
 }
 
 .footer-col a:hover {
@@ -590,6 +599,8 @@ a {
   justify-content: center;
   gap: 16px;
   font-weight: 700;
+  font-size: inherit;
+  line-height: var(--body-line-height);
   color: #495868;
   text-align: center;
 }
@@ -646,6 +657,7 @@ a {
   margin: 0 0 16px;
   color: var(--text);
   font-size: 1.35rem;
+  line-height: var(--body-line-height);
 }
 
 .news-modal__actions {
@@ -667,12 +679,12 @@ a {
 
   .news-content h3 {
     font-size: 1.12rem;
-    line-height: 1.2;
+    line-height: var(--body-line-height);
   }
 
   .news-content p {
     font-size: 0.95rem;
-    line-height: 1.35;
+    line-height: var(--body-line-height);
   }
 
   .footer-main {
