@@ -74,7 +74,7 @@ a {
 }
 
 .topbar-inner {
-  min-height: 76px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -131,6 +131,7 @@ a {
 
 .hero-wrap {
   margin-top: 24px;
+  position: relative;
 }
 
 .hero-banner {
@@ -250,7 +251,7 @@ a {
 
 .hero-card {
   margin: 24px auto 0;
-  max-width: 900px;
+  max-width: 100%;
   border-radius: 22px;
   background: #eef1f2;
   text-align: center;
@@ -258,10 +259,17 @@ a {
 }
 
 .hero-indicators {
-  margin-top: 12px;
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   gap: 8px;
+  z-index: 4;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(23, 35, 48, 0.25);
 }
 
 .hero-indicator-dot {
