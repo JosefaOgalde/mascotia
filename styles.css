@@ -212,10 +212,15 @@ a {
 
 .hero-arrow-prev::before {
   content: "‹";
+  color: #d7f3fb;
 }
 
 .hero-arrow-next::before {
   content: "›";
+}
+
+.hero-arrow-prev:hover::before {
+  color: #c7eaf5;
 }
 
 .hero-arrow:hover {
