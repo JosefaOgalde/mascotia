@@ -27,7 +27,7 @@
 
     <main>
       <section class="hero-wrap container">
-        <div class="hero-banner" data-hero-open-newsletter>
+        <div class="hero-banner">
           <div class="hero-slides" data-hero-slides></div>
           <div class="hero-overlay"></div>
           <button class="hero-arrow hero-arrow-prev" type="button" data-hero-prev aria-label="Banner anterior">
@@ -46,12 +46,6 @@
             adopta o publica mascotas y accede a contenidos útiles<br />
             sobre salud animal, bienestar y tenencia responsable.
           </p>
-          <div class="hero-cta">
-            <button class="btn btn-fill" data-open-newsletter>
-              <i class="fa-regular fa-envelope"></i>
-              Suscríbete a nuestro newsletter
-            </button>
-          </div>
         </article>
       </section>
 
@@ -275,38 +269,6 @@
         </div>
       </section>
     </main>
-
-    <div class="newsletter-modal" data-newsletter-modal hidden>
-      <div class="newsletter-modal__backdrop" data-close-newsletter></div>
-      <section class="newsletter-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
-        <button class="newsletter-modal__close" type="button" data-close-newsletter aria-label="Cerrar">
-          ×
-        </button>
-        <h2 id="newsletter-title">Suscríbete a nuestro newsletter</h2>
-        <p>Recibe novedades y consejos para cuidar a tus regalones.</p>
-
-        <form class="newsletter-form" data-newsletter-form>
-          <input
-            type="text"
-            name="website"
-            tabindex="-1"
-            autocomplete="off"
-            class="bot-trap-field"
-            aria-hidden="true"
-          />
-          <label for="newsletter-email">Correo electrónico</label>
-          <input
-            id="newsletter-email"
-            name="email"
-            type="email"
-            placeholder="tu-correo@ejemplo.com"
-            required
-          />
-          <button type="submit" class="btn btn-fill">Suscribirme</button>
-          <p class="newsletter-form__message" data-newsletter-message></p>
-        </form>
-      </section>
-    </div>
 
     <div data-global-footer></div>
 

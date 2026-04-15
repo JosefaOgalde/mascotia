@@ -1,12 +1,6 @@
 from django.contrib import admin
 
-from .models import AdoptionSeeker, RehomeRequest, Subscriber
-
-
-@admin.register(Subscriber)
-class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ("email", "created_at")
-    search_fields = ("email",)
+from .models import AdoptionSeeker, RehomeRequest
 
 
 @admin.register(AdoptionSeeker)

@@ -757,64 +757,6 @@ a {
   border-color: var(--brand);
 }
 
-.newsletter-modal[hidden] {
-  display: none;
-}
-
-.newsletter-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1500;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-}
-
-.newsletter-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(43, 56, 68, 0.55);
-}
-
-.newsletter-modal__dialog {
-  position: relative;
-  width: min(540px, 100%);
-  border-radius: 18px;
-  background: #fff;
-  padding: 28px 24px;
-  box-shadow: 0 20px 45px rgba(43, 56, 68, 0.2);
-}
-
-.newsletter-modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: none;
-  background: #ebf9fb;
-  color: var(--brand-dark);
-  font-size: 1.35rem;
-  font-weight: 900;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.newsletter-modal__dialog h2 {
-  margin: 4px 0 10px;
-  color: var(--brand);
-  font-size: 1.75rem;
-  font-weight: 900;
-}
-
-.newsletter-modal__dialog p {
-  margin: 0 0 18px;
-  color: var(--muted);
-}
-
 .news-modal[hidden] {
   display: none;
 }
@@ -877,44 +819,6 @@ a {
 .site-toast.is-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-.newsletter-form {
-  display: grid;
-  gap: 10px;
-}
-
-.newsletter-form label {
-  font-weight: 700;
-  color: var(--text);
-}
-
-.newsletter-form input {
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  padding: 11px 12px;
-  font-size: 1rem;
-  font-family: "Raleway", Arial, sans-serif;
-  color: var(--text);
-}
-
-.newsletter-form input:focus {
-  outline: 2px solid #b4edf2;
-  border-color: var(--brand);
-}
-
-.newsletter-form__message {
-  min-height: 22px;
-  margin: 0;
-  font-weight: 700;
-}
-
-.newsletter-form__message.is-success {
-  color: #1b8f66;
-}
-
-.newsletter-form__message.is-error {
-  color: #b83b3b;
 }
 
 .bot-trap-field {
@@ -1005,10 +909,6 @@ a {
   .hero-cta .btn {
     min-width: unset;
     width: 100%;
-  }
-
-  .newsletter-modal__dialog h2 {
-    font-size: 1.45rem;
   }
 
   .quick-carousel-card,
