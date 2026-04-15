@@ -115,15 +115,24 @@ function setupHeroCarousel() {
     return;
   }
 
-  const availableBanners = HERO_BANNERS.filter(Boolean);
+  const availableBanners = HERO_BANNERS.filter((bannerPath) => typeof bannerPath === "string" && bannerPath.trim());
   const fallbackBanner = "assets/banner_principal_1.jpeg";
-  const uniqueBanners = [...new Set(availableBanners)];
-  const sourceBanners = uniqueBanners.length ? uniqueBanners : [fallbackBanner];
+  const sourceBanners = availableBanners.length ? availableBanners : [fallbackBanner];
+
+  function heroImageOnErrorHandler() {
+    return "if(this.dataset.fallbackStage==='1'){this.onerror=null;this.src='/static/assets/banner_principal_1.jpeg';return;}this.dataset.fallbackStage='1';const currentSrc=this.getAttribute('src')||'';if(currentSrc.startsWith('assets/')){this.src='/' + currentSrc;return;}if(currentSrc.startsWith('/assets/')){this.src=currentSrc.replace('/assets/','/static/assets/');return;}this.src='/assets/banner_principal_1.jpeg';";
+  }
 
   if (sourceBanners.length === 1) {
     slidesContainer.innerHTML = `
       <figure class="hero-slide">
-        <img src="${sourceBanners[0]}" alt="Banner principal Mascotia" loading="lazy" />
+        <img
+          src="${sourceBanners[0]}"
+          alt="Banner principal Mascotia"
+          loading="lazy"
+          decoding="async"
+          onerror="${heroImageOnErrorHandler()}"
+        />
       </figure>
     `;
     return;
@@ -141,7 +150,13 @@ function setupHeroCarousel() {
         .map(
           (source) => `
             <figure class="hero-slide">
-              <img src="${source}" alt="Banner principal Mascotia" loading="lazy" />
+              <img
+                src="${source}"
+                alt="Banner principal Mascotia"
+                loading="lazy"
+                decoding="async"
+                onerror="${heroImageOnErrorHandler()}"
+              />
             </figure>
           `
         )
