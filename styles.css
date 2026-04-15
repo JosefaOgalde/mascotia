@@ -135,7 +135,8 @@ a {
 
 .hero-banner {
   border-radius: 14px;
-  aspect-ratio: 2 / 1;
+  width: 100%;
+  aspect-ratio: 1024 / 409;
   height: auto;
   min-height: 0;
   position: relative;
@@ -164,7 +165,7 @@ a {
 .hero-slide img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center center;
   display: block;
 }
@@ -745,7 +746,8 @@ a {
   }
 
   .hero-banner {
-    aspect-ratio: 2 / 1;
+    width: 100%;
+    aspect-ratio: 1024 / 409;
     height: auto;
     min-height: 0;
   }
