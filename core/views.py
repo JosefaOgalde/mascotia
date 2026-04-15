@@ -17,7 +17,7 @@ from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 
-from .models import AdoptionSeeker, RehomeRequest
+from .models import AdoptionSeeker, RehomeRequest, Subscriber
 from .security import get_client_ip, is_rate_limited
 
 
@@ -244,3 +244,41 @@ def submit_adoption_form(request):
         pass
 
     return JsonResponse({"ok": True, "message": "Formulario enviado correctamente."})
+
+
+@require_POST
+def subscribe_newsletter(request):
+    payload = {}
+
+    if request.content_type and "application/json" in request.content_type:
+        try:
+            payload = json.loads(request.body.decode("utf-8"))
+        except json.JSONDecodeError:
+            payload = {}
+    else:
+        payload = request.POST.dict()
+
+    email = str(payload.get("email", "")).strip().lower()
+    if not email:
+        return JsonResponse({"ok": False, "message": "Ingresa tu correo electrónico."}, status=400)
+
+    try:
+        validate_email(email)
+    except ValidationError:
+        return JsonResponse({"ok": False, "message": "Ingresa un correo válido."}, status=400)
+
+    client_ip = get_client_ip(request)
+    if is_rate_limited(f"newsletter:ip:{client_ip}", limit=20, window_seconds=900):
+        return JsonResponse(
+            {"ok": False, "message": "Demasiados intentos desde tu red. Intenta nuevamente en unos minutos."},
+            status=429,
+        )
+
+    subscriber, created = Subscriber.objects.get_or_create(email=email)
+    if not created:
+        return JsonResponse(
+            {"ok": False, "already_registered": True, "message": "Este correo ya está suscrito."},
+            status=409,
+        )
+
+    return JsonResponse({"ok": True, "message": "Te suscribiste a Mascotia.app"})

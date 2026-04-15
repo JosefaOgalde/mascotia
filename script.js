@@ -426,98 +426,126 @@ async function parseJsonResponse(response) {
   }
 }
 
-function setupSuccessToast() {
-  const toast = document.createElement("div");
-  toast.className = "site-toast";
-  toast.setAttribute("aria-live", "polite");
-  toast.setAttribute("role", "status");
-  document.body.appendChild(toast);
-
-  let timeoutId = null;
-
-  return function showToast(text) {
-    if (timeoutId) {
-      window.clearTimeout(timeoutId);
-    }
-    toast.textContent = text;
-    toast.classList.add("is-visible");
-    timeoutId = window.setTimeout(() => {
-      toast.classList.remove("is-visible");
-    }, 4500);
-  };
-}
-
-const showSuccessToast = setupSuccessToast();
-
-function setupAdoptionForm() {
-  const form = document.querySelector("[data-adoption-form]");
-  const message = document.querySelector("[data-adoption-message]");
-
-  if (!form || !message) {
+function setupNewsletterSubscription() {
+  const openButton = document.querySelector("[data-open-newsletter-modal]");
+  if (!openButton) {
     return;
   }
 
+  const modal = document.createElement("div");
+  modal.className = "news-modal";
+  modal.hidden = true;
+  modal.innerHTML = `
+    <div class="news-modal__backdrop" data-newsletter-modal-close></div>
+    <section class="news-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="newsletter-modal-title">
+      <h3 id="newsletter-modal-title">Suscríbete a NotiPets</h3>
+      <form class="newsletter-modal-form" data-newsletter-form>
+        <label for="newsletter-email">Correo electrónico</label>
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          placeholder="tu-correo@ejemplo.com"
+          required
+        />
+        <p class="newsletter-modal-message" data-newsletter-message></p>
+        <div class="news-modal__actions">
+          <button type="button" class="btn btn-outline" data-newsletter-modal-close>Cancelar</button>
+          <button type="submit" class="btn btn-fill">Suscribirme</button>
+        </div>
+      </form>
+    </section>
+  `;
+  document.body.appendChild(modal);
+
+  const closeButtons = [...modal.querySelectorAll("[data-newsletter-modal-close]")];
+  const form = modal.querySelector("[data-newsletter-form]");
+  const emailInput = modal.querySelector("#newsletter-email");
+  const messageNode = modal.querySelector("[data-newsletter-message]");
+
   function setMessage(text, success) {
-    message.textContent = text;
-    message.classList.toggle("is-success", success);
-    message.classList.toggle("is-error", !success);
+    if (!messageNode) {
+      return;
+    }
+    messageNode.textContent = text;
+    messageNode.classList.toggle("is-success", !!success);
+    messageNode.classList.toggle("is-error", !success);
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    setMessage("", true);
+    if (form) {
+      form.reset();
+    }
+  }
+
+  function openModal() {
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    window.setTimeout(() => emailInput?.focus(), 0);
+  }
+
+  openButton.addEventListener("click", openModal);
+  closeButtons.forEach((button) => button.addEventListener("click", closeModal));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      closeModal();
+    }
+  });
+
+  if (!form) {
+    return;
   }
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
-
-    if (!payload.request_type || !payload.full_name || !payload.email || !payload.details) {
-      setMessage("Completa los campos obligatorios.", false);
+    const email = String(emailInput?.value || "").trim().toLowerCase();
+    if (!email) {
+      setMessage("Ingresa tu correo electrónico.", false);
       return;
     }
 
-    if (!["busco_adoptar", "quiero_dar_en_adopcion", "otro"].includes(payload.request_type)) {
-      setMessage("Selecciona una opción válida.", false);
-      return;
-    }
-
-    setMessage("Enviando formulario...", true);
+    setMessage("Suscribiendo...", true);
 
     try {
       const csrfToken = await ensureCsrfToken();
       if (!csrfToken) {
-        setMessage("No pudimos validar tu sesión. Recarga la página e intenta nuevamente.", false);
+        setMessage("No pudimos validar la sesión. Recarga e intenta nuevamente.", false);
         return;
       }
 
-      const response = await fetch("/api/adoption/submit/", {
+      const response = await fetch("/api/newsletter/subscribe/", {
         method: "POST",
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrfToken,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ email }),
       });
 
       const data = await parseJsonResponse(response);
-
       if (!response.ok || !data.ok) {
-        const fallbackMessage = response.status === 404
-          ? "El servicio del formulario no está disponible en este momento."
-          : "No fue posible enviar el formulario.";
+        const fallbackMessage = response.status === 409
+          ? "Este correo ya está suscrito."
+          : "No fue posible completar la suscripción.";
         setMessage(data.message || fallbackMessage, false);
         return;
       }
 
-      setMessage("", true);
-      showSuccessToast("El formulario quedó registrado, pronto te contactarán.");
-      form.reset();
+      setMessage(data.message || "Te suscribiste a Mascotia.app", true);
+      window.setTimeout(closeModal, 1200);
     } catch (_error) {
       setMessage("Error de conexión. Intenta nuevamente.", false);
     }
   });
 }
 
-setupAdoptionForm();
+setupNewsletterSubscription();
 
 function setupNewsLinks() {
   const modal = document.createElement("div");

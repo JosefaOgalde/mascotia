@@ -6,12 +6,14 @@ from .views import (
     backoffice_logout,
     csrf_bootstrap,
     home,
+    subscribe_newsletter,
     submit_adoption_form,
 )
 
 urlpatterns = [
     path("", home, name="home"),
     path("api/csrf/", csrf_bootstrap, name="csrf_bootstrap"),
+    path("api/newsletter/subscribe/", subscribe_newsletter, name="subscribe_newsletter"),
     path("api/adoption/submit/", submit_adoption_form, name="submit_adoption_form"),
     path("backoffice/login/", backoffice_login, name="backoffice_login"),
     path("backoffice/logout/", backoffice_logout, name="backoffice_logout"),

@@ -45,6 +45,9 @@
             adopta o publica mascotas y accede a contenidos útiles<br />
             sobre salud animal, bienestar y tenencia responsable.
           </p>
+          <div class="hero-cta">
+            <button type="button" class="btn btn-fill" data-open-newsletter-modal>Suscribirme</button>
+          </div>
         </article>
       </section>
 
@@ -144,130 +147,6 @@
         </div>
       </section>
 
-      <section class="features blog-section">
-        <div class="container">
-          <header class="section-heading">
-            <h2><span>Blog</span> Mascotia</h2>
-            <p>Guías cortas para ayudarte en el día a día con tus mascotas.</p>
-          </header>
-
-          <div class="blog-mini-grid">
-            <article class="blog-mini-card">
-              <img
-                class="blog-mini-thumb"
-                src="https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=1000&q=80"
-                alt="Gato pequeño siamés"
-                loading="lazy"
-              />
-              <h3>Vacunas al día</h3>
-              <p>Calendario básico de vacunas para perros y gatos.</p>
-              <button type="button" class="btn blog-more-btn">Ver más</button>
-            </article>
-            <article class="blog-mini-card">
-              <img
-                class="blog-mini-thumb"
-                src="https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?auto=format&fit=crop&w=1000&q=80"
-                alt="Gato alimentándose"
-                loading="lazy"
-              />
-              <h3>Alimentación saludable</h3>
-              <p>Cómo elegir alimentos según edad y nivel de actividad.</p>
-              <button type="button" class="btn blog-more-btn">Ver más</button>
-            </article>
-            <article class="blog-mini-card">
-              <img
-                class="blog-mini-thumb"
-                src="https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?auto=format&fit=crop&w=1000&q=80"
-                alt="Gato bebé"
-                loading="lazy"
-              />
-              <h3>Primeros cuidados</h3>
-              <p>Checklist esencial para recibir una mascota en casa.</p>
-              <button type="button" class="btn blog-more-btn">Ver más</button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="adoption-form-section">
-        <div class="container">
-          <header class="section-heading">
-            <h2>Formulario de <span class="adopcion-highlight">adopción</span></h2>
-            <p>
-              Completa este formulario si buscas adoptar una mascota<br />
-              o si necesitas encontrar una familia para una mascota.
-            </p>
-          </header>
-
-          <form class="adoption-form" data-adoption-form>
-            {% csrf_token %}
-            <input
-              type="text"
-              name="website"
-              tabindex="-1"
-              autocomplete="off"
-              class="bot-trap-field"
-              aria-hidden="true"
-            />
-            <label for="request_type">Tipo de solicitud</label>
-            <select id="request_type" name="request_type" required>
-              <option value="">Selecciona una opción</option>
-              <option value="busco_adoptar">Busco adoptar una mascota</option>
-              <option value="quiero_dar_en_adopcion">Quiero encontrar familia para una mascota</option>
-              <option value="otro">Otro</option>
-            </select>
-            <small>Elige la opción que mejor describa tu caso.</small>
-
-            <label for="full_name">Nombre completo</label>
-            <input id="full_name" name="full_name" type="text" placeholder="Ej: Sofia Gonzalez" required />
-
-            <div class="adoption-form-row">
-              <div>
-                <label for="adoption_email">Correo electrónico</label>
-                <input
-                  id="adoption_email"
-                  name="email"
-                  type="email"
-                  placeholder="tu-correo@ejemplo.com"
-                  required
-                />
-              </div>
-              <div>
-                <label for="phone">Teléfono</label>
-                <input id="phone" name="phone" type="text" placeholder="+56 9 1234 5678" />
-              </div>
-            </div>
-
-            <div class="adoption-form-row">
-              <div>
-                <label for="city">Ciudad</label>
-                <input id="city" name="city" type="text" placeholder="Ej: Santiago" />
-              </div>
-              <div>
-                <label for="pet_type">Tipo de mascota</label>
-                <select id="pet_type" name="pet_type">
-                  <option value="">Selecciona una opción</option>
-                  <option value="perro">Perro</option>
-                  <option value="gato">Gato</option>
-                  <option value="otra">Otra</option>
-                </select>
-              </div>
-            </div>
-
-            <label for="details">Descripción</label>
-            <textarea
-              id="details"
-              name="details"
-              rows="4"
-              placeholder="Cuéntanos más detalles para ayudarte mejor."
-              required
-            ></textarea>
-
-            <button type="submit" class="btn btn-fill">Enviar formulario</button>
-            <p class="newsletter-form__message" data-adoption-message></p>
-          </form>
-        </div>
-      </section>
     </main>
 
     <div data-global-footer></div>
