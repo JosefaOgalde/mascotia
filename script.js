@@ -51,6 +51,7 @@ const HERO_BANNERS = [
   "assets/banner_principal_1.jpeg",
   "assets/banner_principal_2.png",
   "assets/banner_principal_3.png",
+  "assets/banner_principal_4.png",
 ];
 
 const HERO_ROTATION_MS = 5000;
