@@ -438,7 +438,7 @@ function setupNewsletterSubscription() {
   modal.innerHTML = `
     <div class="news-modal__backdrop" data-newsletter-modal-close></div>
     <section class="news-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="newsletter-modal-title">
-      <h3 id="newsletter-modal-title">Suscríbete a NotiPets</h3>
+      <h3 id="newsletter-modal-title">Suscríbete a Mascotia.app</h3>
       <form class="newsletter-modal-form" data-newsletter-form>
         <label for="newsletter-email">Correo electrónico</label>
         <input

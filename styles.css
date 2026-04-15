@@ -74,17 +74,18 @@ a {
 }
 
 .topbar-inner {
-  min-height: 64px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: 1.65rem;
   font-weight: 900;
   color: var(--brand);
   letter-spacing: 0.2px;
+  line-height: 1.2;
 }
 
 .auth-buttons {
@@ -737,14 +738,14 @@ a {
 
 @media (max-width: 760px) {
   .logo {
-    font-size: 1.55rem;
+    font-size: 1.42rem;
   }
 
   .topbar-inner {
     flex-direction: column;
     justify-content: center;
-    gap: 12px;
-    padding: 14px 0;
+    gap: 10px;
+    padding: 10px 0;
   }
 
   .hero-banner {
